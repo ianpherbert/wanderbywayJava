@@ -11,19 +11,51 @@ public class CityDB {
     private CityDBType type;
     private int population;
     private LocationDB location;
-    private String country;
     private String shareId;
     private String id;
-    private String areaId;
+    private List<String> areaId;
     private List<String> airports;
     private List <String> trainStations;
+    private String slug;
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CityDBType getType() {
+        return type;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public LocationDB getLocation() {
+        return location;
+    }
+
+    public String getShareId() {
+        return shareId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public List<String> getAreaId() {
+        return areaId;
+    }
+
+    public List<String> getAirports() {
+        return airports;
+    }
+
+    public List<String> getTrainStations() {
+        return trainStations;
+    }
 }
 
-enum CityDBType{
-    MEGA_CITY,
-    LARGE_CITY,
-    MEDIUM_CITY,
-    SMALL_CITY,
-    TOWN,
-    VILLAGE
-}

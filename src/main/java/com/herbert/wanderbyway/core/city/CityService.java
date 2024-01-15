@@ -1,26 +1,26 @@
 package com.herbert.wanderbyway.core.city;
 
+import com.herbert.wanderbyway.core.city.connectors.FindCitiesConnector;
+import com.herbert.wanderbyway.core.city.useCases.FindCitiesUseCase;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CityService implements CityGetter {
-    @Override
-    public List<City> getAllCities() {
-        return null;
+public class CityService implements FindCitiesUseCase {
+    FindCitiesConnector findCitiesConnector;
+
+    public CityService(FindCitiesConnector findCitiesConnector) {
+        this.findCitiesConnector = findCitiesConnector;
     }
 
     @Override
-    public List<City> searchCities(String queryString) {
-        ArrayList<City> cityList = new ArrayList<>();
-        cityList.add(new City(queryString, CityType.MEDIUM_CITY, 9000, 90, 90, "France", "shareId", "idId", "areaId", new ArrayList<String>(), new ArrayList<String>()));
-        return cityList;
+    public List<City> findCities() {
+        return findCitiesConnector.findCities();
     }
 
     @Override
-    public City getCityById(String cityId) {
-        return null;
+    public List<City> findCities(String query) {
+        return findCitiesConnector.findCities(query);
     }
 }

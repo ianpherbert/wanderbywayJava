@@ -17,10 +17,40 @@ public class TrainStationDB {
     private List<TrainCompanyIdDB> companyIds;
     private String id;
 
-    private static class TrainCompanyIdDB {
-        private String companyId;
-        private String companyName;
-        private String id;
+    public String getName() {
+        return name;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public LocationDB getLocation() {
+        return location;
+    }
+
+    public Boolean getAirport() {
+        return airport;
+    }
+
+    public String getAirportId() {
+        return airportId;
+    }
+
+    public String getApiId() {
+        return apiId;
+    }
+
+    public String getUicId() {
+        return uicId;
+    }
+
+    public List<TrainCompanyIdDB> getCompanyIds() {
+        return companyIds;
+    }
+
+    public String getId() {
+        return id;
     }
 }
 

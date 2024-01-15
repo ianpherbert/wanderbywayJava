@@ -14,14 +14,20 @@ public class Airport {
     private final String iata;
     private final String iaco;
     private final List<Route> routes;
+    private final String slug;
 
-    public Airport(String id, Location location, String name, String iata, String iaco, List<Route> routes) {
+    public Airport(String id, Location location, String name, String iata, String iaco, List<Route> routes, String slug) {
         this.id = id;
         this.location = location;
         this.name = name;
         this.iata = iata;
         this.iaco = iaco;
         this.routes = routes;
+        this.slug = slug;
+    }
+
+    public String getSlug() {
+        return slug;
     }
 
     public String getId() {

@@ -1,0 +1,11 @@
+server:
+  port: 8000
+spring:
+  data:
+    mongodb:
+      database: wanderTravel
+      auto-index-creation: true
+mongock:
+  migration-scan-package:
+    - com.herbert.travelapp.api.changelogs
+

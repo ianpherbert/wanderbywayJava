@@ -5,12 +5,21 @@ public class RouteStopDB {
     private String name;
     private LocationDB location;
     private RouteStopTypeDB type;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocationDB getLocation() {
+        return location;
+    }
+
+    public RouteStopTypeDB getType() {
+        return type;
+    }
 }
 
-enum RouteStopTypeDB {
-    AIRPORT,
-    BUS_STATION,
-    TRAIN_STATION,
-    FERRY_PORT,
-    OTHER
-}

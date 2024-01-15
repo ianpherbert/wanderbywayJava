@@ -10,9 +10,6 @@ import java.util.List;
 public interface TrainStationDBMapper {
     public TrainStation toTrainStation(TrainStationDB trainStationDB);
 
-    public TrainStationDB toTrainStationDB(TrainStation trainStation);
-
     public List<TrainStation> toTrainStations(List<TrainStationDB> trainStationDBS);
 
-    public List<TrainStationDB> toTrainStationDBs(List<TrainStation> trainStations);
 }

@@ -9,12 +9,12 @@ public class City {
     private final CityType type;
     private final int population;
     private final Location location;
-    private final String country;
     private final String shareId;
     private final String id;
-    private final String areaId;
+    private final List<String> areaId;
     private final List<String> airports;
     private final List <String> trainStations;
+    private final String slug;
 
     public City(
             String name,
@@ -22,23 +22,27 @@ public class City {
             int population,
             double latitude,
             double longitude,
-            String country,
             String shareId,
             String id,
-            String areaId,
+            List<String> areaId,
             List<String> airports,
-            List<String> trainStations
+            List<String> trainStations,
+            String slug
     ) {
         this.name = name;
         this.type = type;
         this.population = population;
         this.location = new Location(latitude, longitude, null);
-        this.country = country;
         this.shareId = shareId;
         this.id = id;
         this.areaId = areaId;
         this.airports = airports;
         this.trainStations = trainStations;
+        this.slug = slug;
+    }
+
+    public String getSlug() {
+        return slug;
     }
 
     public String getName() {
@@ -57,10 +61,6 @@ public class City {
         return location;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
     public String getShareId() {
         return shareId;
     }
@@ -69,7 +69,7 @@ public class City {
         return id;
     }
 
-    public String getAreaId() {
+    public List<String> getAreaId() {
         return areaId;
     }
 
@@ -82,11 +82,3 @@ public class City {
     }
 }
 
-enum CityType{
-    MEGA_CITY,
-    LARGE_CITY,
-    MEDIUM_CITY,
-    SMALL_CITY,
-    TOWN,
-    VILLAGE
-}

@@ -10,9 +10,5 @@ import java.util.List;
 public interface AirportDBMapper {
     public Airport toAirport(AirportDB airportDB);
 
-    public AirportDB toAirportDB(Airport airport);
-
     public List<Airport> toCities(List<AirportDB> airportDBS);
-
-    public List<AirportDB> toAirportDBs(List<Airport> airports);
 }
