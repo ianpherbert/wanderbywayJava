@@ -1,7 +1,7 @@
-package com.herbert.wanderbyway.dataprovider.airport;
+package com.herbert.wanderbyway.dataprovider.database.airport;
 
-import com.herbert.wanderbyway.dataprovider.common.LocationDB;
-import com.herbert.wanderbyway.dataprovider.common.RouteDB;
+import com.herbert.wanderbyway.dataprovider.database.common.LocationDB;
+import com.herbert.wanderbyway.dataprovider.database.common.RouteDB;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;

@@ -20,9 +20,22 @@ public class RestTemplateConfiguration {
 
     @Bean
     public ObjectMapper objectMapper() {
-        return new ObjectMapper()
+        ObjectMapper objectMapper = new ObjectMapper()
                 .registerModule(new JavaTimeModule())
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+
+        // Configure the ObjectMapper to handle XML
+//        XmlMapper xmlMapper = new XmlMapper();
+//        xmlMapper.enable(ToXmlGenerator.Feature.WRITE_XML_DECLARATION);
+//        xmlMapper.setDefaultUseWrapper(false);
+//
+//        objectMapper.registerModule(new SimpleModule()
+//                .addSerializer(new XmlSerializer(xmlMapper))
+//                .addDeserializer(Object.class, new XmlDeserializer()));
+//
+//        objectMapper.registerModule(new JacksonXmlModule());
+
+        return objectMapper;
     }
 }

@@ -1,4 +1,4 @@
-package com.herbert.wanderbyway.dataprovider.common;
+package com.herbert.wanderbyway.dataprovider.database.common;
 
 import com.herbert.wanderbyway.core.common.Region;
 

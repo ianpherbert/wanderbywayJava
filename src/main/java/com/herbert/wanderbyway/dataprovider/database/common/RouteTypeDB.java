@@ -1,4 +1,4 @@
-package com.herbert.wanderbyway.dataprovider.common;
+package com.herbert.wanderbyway.dataprovider.database.common;
 
 public enum RouteTypeDB {
     BUS,

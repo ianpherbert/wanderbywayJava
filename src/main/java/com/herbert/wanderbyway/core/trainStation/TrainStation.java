@@ -3,7 +3,6 @@ package com.herbert.wanderbyway.core.trainStation;
 import com.herbert.wanderbyway.core.common.Location;
 import com.herbert.wanderbyway.core.route.RouteStop;
 import com.herbert.wanderbyway.core.route.RouteStopType;
-import com.herbert.wanderbyway.dataprovider.common.LocationDB;
 
 import java.util.List;
 

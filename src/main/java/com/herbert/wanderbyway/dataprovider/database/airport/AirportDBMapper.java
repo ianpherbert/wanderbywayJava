@@ -1,4 +1,4 @@
-package com.herbert.wanderbyway.dataprovider.airport;
+package com.herbert.wanderbyway.dataprovider.database.airport;
 
 import com.herbert.wanderbyway.core.airport.Airport;
 import org.mapstruct.Mapper;

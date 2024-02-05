@@ -1,4 +1,4 @@
-package com.herbert.wanderbyway.dataprovider.trainStation;
+package com.herbert.wanderbyway.dataprovider.database.trainStation;
 
 import com.herbert.wanderbyway.core.trainStation.TrainStation;
 import org.mapstruct.Mapper;

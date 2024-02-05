@@ -1,4 +1,4 @@
-package com.herbert.wanderbyway.dataprovider.city;
+package com.herbert.wanderbyway.dataprovider.database.city;
 
 import com.herbert.wanderbyway.core.city.City;
 import com.herbert.wanderbyway.core.city.connectors.FindCitiesConnector;

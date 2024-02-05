@@ -1,6 +1,6 @@
-package com.herbert.wanderbyway.dataprovider.city;
+package com.herbert.wanderbyway.dataprovider.database.city;
 
-import com.herbert.wanderbyway.dataprovider.common.LocationDB;
+import com.herbert.wanderbyway.dataprovider.database.common.LocationDB;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
