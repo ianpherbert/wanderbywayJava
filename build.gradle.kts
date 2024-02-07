@@ -2,7 +2,6 @@ plugins {
     java
     id("org.springframework.boot") version "3.1.5"
     id("io.spring.dependency-management") version "1.1.3"
-    id("checkstyle")
 }
 
 group = "com.herbert"
@@ -23,7 +22,6 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0'")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -42,7 +40,3 @@ tasks.bootBuildImage {
     builder.set("paketobuildpacks/builder-jammy-base:latest")
 }
 
-configure<CheckstyleExtension> {
-    toolVersion = "10.12.5" // Specify your desired Checkstyle version
-    configFile = rootProject.file("config/checkstyle.xml")
-}
