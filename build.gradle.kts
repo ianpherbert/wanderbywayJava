@@ -15,21 +15,13 @@ repositories {
     mavenCentral()
 }
 
-dependencyManagement {
-    imports {
-        mavenBom("io.mongock:mongock-bom:5.0.34")
-    }
-}
-
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
-    implementation("io.mongock:mongodb-springdata-v3-driver")
-    implementation("io.mongock:mongock-springboot")
-    implementation("com.byteowls:jopencage:1.4.0")
+    implementation("org.postgresql:postgresql:42.6.0")
 }
 
 tasks.withType<Test> {

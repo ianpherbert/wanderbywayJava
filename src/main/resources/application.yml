@@ -5,11 +5,14 @@ mongock:
     - com.herbert.travelapp.api.changelogs
 
 spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017
-      database: wanderTravel
-      auto-index-creation: true
+  datasource:
+    url: jdbc:postgresql://db.bsrmtjhnrzxpvwoxqvop.supabase.co:5432/postgres
+    username: postgres
+    password: KRscEoMbMHyPtEhN
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
 tequila:
   apiKey: BhUIsil5ss0_-KflWEsay8guLOoxuVt7
   baseUrl: https://tequila-api.kiwi.com/v2
