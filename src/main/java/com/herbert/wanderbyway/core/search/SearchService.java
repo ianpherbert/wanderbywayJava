@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Component
 public class SearchService implements FindAllByNameUseCase {
@@ -23,12 +22,19 @@ public class SearchService implements FindAllByNameUseCase {
     }
 
     @Override
-    public List<SearchItem> findAllByName(String query) {
-        List<SearchItem> cities = findCitiesByName.findByName(query);
-        List<SearchItem> airports = findAirportsByName.findByName(query);
-        List<SearchItem> trainStations = findTrainStationsByName.findByName(query);
-        List<SearchItem> results = new ArrayList<SearchItem>();
-       Stream.of(cities.stream(), airports.stream(), trainStations.stream()).forEach(it ->results.addAll(it.toList()));
+    public List<SearchItem> findAllByName(String query, SearchOptions options) {
+        List<SearchItem> results = new ArrayList<>();
+
+        if(options.city){
+            results.addAll(findCitiesByName.findByName(query));
+        }
+        if(options.train){
+            results.addAll(findTrainStationsByName.findByName(query));
+        }
+        if(options.airport){
+            results.addAll(findAirportsByName.findByName(query));
+        }
+
        return results;
     }
 }
