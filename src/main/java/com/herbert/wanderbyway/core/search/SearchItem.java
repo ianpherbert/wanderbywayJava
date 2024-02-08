@@ -3,13 +3,15 @@ package com.herbert.wanderbyway.core.search;
 import java.util.List;
 
 public class SearchItem {
+    int id;
     String name;
     String slug;
     SearchItemType type;
     String country;
     List<SearchItem> children;
 
-    public SearchItem(String name, String slug, SearchItemType type, List<SearchItem> children, String country) {
+    public SearchItem(int id, String name, String slug, SearchItemType type, List<SearchItem> children, String country) {
+        this.id = id;
         this.name = name;
         this.slug = slug;
         this.type = type;
@@ -35,5 +37,9 @@ public class SearchItem {
 
     public List<SearchItem> getChildren() {
         return children;
+    }
+
+    public int getId() {
+        return id;
     }
 }

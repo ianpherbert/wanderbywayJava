@@ -3,6 +3,7 @@ package com.herbert.wanderbyway.entryPoint.rest.search;
 import com.herbert.wanderbyway.core.search.SearchItem;
 import com.herbert.wanderbyway.core.search.SearchOptions;
 import com.herbert.wanderbyway.core.search.useCases.FindAllByNameUseCase;
+import com.herbert.wanderbyway.utils.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,8 @@ public class SearchRestController {
             @RequestParam(required = false) Boolean bus
             ){
         SearchOptions options = new SearchOptions(airport, train, city, port, bus);
-        List<SearchItem> results = findAllByNameUseCase.findAllByName(query, options);
+        String normalisedQueryString = StringUtils.removeAccentsAndSpecialCharacters(query);
+        List<SearchItem> results = findAllByNameUseCase.findAllByName(normalisedQueryString, options);
         return new SearchResult(results.size(), options, results);
     }
 }
