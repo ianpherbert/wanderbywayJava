@@ -1,9 +1,9 @@
 package com.herbert.wanderbyway.core.search.connectors;
 
-import com.herbert.wanderbyway.core.search.SearchResult;
+import com.herbert.wanderbyway.core.search.SearchItem;
 
 import java.util.List;
 
 public interface FindTrainStationsByName {
-    List<SearchResult> findByName(String query);
+    List<SearchItem> findByName(String query);
 }

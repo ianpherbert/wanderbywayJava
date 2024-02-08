@@ -1,6 +1,6 @@
 package com.herbert.wanderbyway.entryPoint.rest.search;
 
-import com.herbert.wanderbyway.core.search.SearchResult;
+import com.herbert.wanderbyway.core.search.SearchItem;
 import com.herbert.wanderbyway.core.search.useCases.FindAllByNameUseCase;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +19,7 @@ public class SearchRestController {
     }
 
     @GetMapping("/{query}")
-    List<SearchResult> searchByName(@PathVariable String query){
+    List<SearchItem> searchByName(@PathVariable String query){
         return findAllByNameUseCase.findAllByName(query);
     }
 }

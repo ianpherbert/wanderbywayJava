@@ -23,11 +23,11 @@ public class SearchService implements FindAllByNameUseCase {
     }
 
     @Override
-    public List<SearchResult> findAllByName(String query) {
-        List<SearchResult> cities = findCitiesByName.findByName(query);
-        List<SearchResult> airports = findAirportsByName.findByName(query);
-        List<SearchResult> trainStations = findTrainStationsByName.findByName(query);
-        List<SearchResult> results = new ArrayList<SearchResult>();
+    public List<SearchItem> findAllByName(String query) {
+        List<SearchItem> cities = findCitiesByName.findByName(query);
+        List<SearchItem> airports = findAirportsByName.findByName(query);
+        List<SearchItem> trainStations = findTrainStationsByName.findByName(query);
+        List<SearchItem> results = new ArrayList<SearchItem>();
        Stream.of(cities.stream(), airports.stream(), trainStations.stream()).forEach(it ->results.addAll(it.toList()));
        return results;
     }

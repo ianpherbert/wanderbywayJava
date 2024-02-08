@@ -1,6 +1,6 @@
 package com.herbert.wanderbyway.core.search;
 
-public enum SearchResultType{
+public enum SearchItemType {
     AIRPORT,
     PORT,
     BUS_STATION,

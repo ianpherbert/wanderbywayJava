@@ -2,14 +2,14 @@ package com.herbert.wanderbyway.core.search;
 
 import java.util.List;
 
-public class SearchResult {
+public class SearchItem {
     String name;
     String slug;
-    SearchResultType type;
+    SearchItemType type;
     String country;
-    List<SearchResult> children;
+    List<SearchItem> children;
 
-    public SearchResult(String name, String slug, SearchResultType type, List<SearchResult> children, String country) {
+    public SearchItem(String name, String slug, SearchItemType type, List<SearchItem> children, String country) {
         this.name = name;
         this.slug = slug;
         this.type = type;
@@ -29,11 +29,11 @@ public class SearchResult {
         return slug;
     }
 
-    public SearchResultType getType() {
+    public SearchItemType getType() {
         return type;
     }
 
-    public List<SearchResult> getChildren() {
+    public List<SearchItem> getChildren() {
         return children;
     }
 }

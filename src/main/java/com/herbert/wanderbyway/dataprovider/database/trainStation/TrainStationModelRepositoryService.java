@@ -1,6 +1,6 @@
 package com.herbert.wanderbyway.dataprovider.database.trainStation;
 
-import com.herbert.wanderbyway.core.search.SearchResult;
+import com.herbert.wanderbyway.core.search.SearchItem;
 import com.herbert.wanderbyway.core.search.connectors.FindTrainStationsByName;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class TrainStationModelRepositoryService implements FindTrainStationsByNa
     }
 
     @Override
-    public List<SearchResult> findByName(String query) {
+    public List<SearchItem> findByName(String query) {
         List<TrainStationModel> results = trainStationModelRepository.findBySlugContaining(query);
         return trainStationModelMapper.toSearchResults(results);
     }

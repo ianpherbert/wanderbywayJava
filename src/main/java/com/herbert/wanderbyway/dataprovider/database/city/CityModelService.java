@@ -1,6 +1,6 @@
 package com.herbert.wanderbyway.dataprovider.database.city;
 
-import com.herbert.wanderbyway.core.search.SearchResult;
+import com.herbert.wanderbyway.core.search.SearchItem;
 import com.herbert.wanderbyway.core.search.connectors.FindCitiesByName;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class CityModelService implements FindCitiesByName {
     }
 
     @Override
-    public List<SearchResult> findByName(String query) {
+    public List<SearchItem> findByName(String query) {
         List<CityModel> results = cityModelRepository.findBySlugContaining(query);
         return cityModelMapper.toSearchResults(results);
     }
