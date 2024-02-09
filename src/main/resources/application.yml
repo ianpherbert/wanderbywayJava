@@ -1,18 +1,19 @@
 server:
   port: 8000
-mongock:
-  migration-scan-package:
-    - com.herbert.travelapp.api.changelogs
 
 spring:
   datasource:
-    url: jdbc:postgresql://db.bsrmtjhnrzxpvwoxqvop.supabase.co:5432/postgres
+    url: jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:5432/postgres?user=postgres.bsrmtjhnrzxpvwoxqvop&password=dV38LWUgPCXSPSc5
     username: postgres
-    password: KRscEoMbMHyPtEhN
+    password: dV38LWUgPCXSPSc5
     driver-class-name: org.postgresql.Driver
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+    show-sql: true
 tequila:
   apiKey: BhUIsil5ss0_-KflWEsay8guLOoxuVt7
   baseUrl: https://tequila-api.kiwi.com/v2

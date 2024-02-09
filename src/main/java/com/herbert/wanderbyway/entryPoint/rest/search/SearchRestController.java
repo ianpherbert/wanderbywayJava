@@ -6,6 +6,9 @@ import com.herbert.wanderbyway.core.search.useCases.FindAllByNameUseCase;
 import com.herbert.wanderbyway.utils.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -29,6 +32,12 @@ public class SearchRestController {
         SearchOptions options = new SearchOptions(airport, train, city, port, bus);
         String normalisedQueryString = StringUtils.removeAccentsAndSpecialCharacters(query);
         List<SearchItem> results = findAllByNameUseCase.findAllByName(normalisedQueryString, options);
-        return new SearchResult(results.size(), options, results);
+        List<SearchItem> sortedResults = this.sortResultsBySimilarity(results, normalisedQueryString);
+        return new SearchResult(results.size(), options, sortedResults);
+    }
+
+    private List<SearchItem> sortResultsBySimilarity(List<SearchItem> items, String target) {
+        items.sort(Comparator.comparingInt((SearchItem a) -> StringUtils.getLevenshteinDistance(a.getSlug(), target)));
+        return items;
     }
 }
