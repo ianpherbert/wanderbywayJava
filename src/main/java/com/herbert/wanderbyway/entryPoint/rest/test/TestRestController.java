@@ -18,7 +18,7 @@ public class TestRestController {
     FindRoutesFromPlaceUseCase findRoutesFromPlaceUseCase;
 
     @GetMapping("/airport/{id}")
-    List<RouteSearchItem> getFlights(@PathVariable String id){
+    List<RouteSearchItem> getFlights(@PathVariable int id){
         return findRoutesFromPlaceUseCase.findRoutes(id, RouteSearchItemPlaceType.AIRPORT);
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public abstract class FlightSearchMapper {
     RouteSearchItem toRouteSearchItem(Flight flight){
-        RouteSearchItemPlace to = RouteSearchItemPlace.buildSearchAirport(flight.getCityCodeTo());
+        RouteSearchItemPlace to = RouteSearchItemPlace.buildSearchAirport(flight.getFlyTo());
         return new RouteSearchItem(RouteSearchItemType.PLANE, to, flight.getDuration().getTotal() );
     }
 

@@ -15,6 +15,7 @@ public class SearchParams {
     String dateFrom;
     String dateTo;
 
+    String maxStopovers = "0";
     public SearchParams(String fly_from) {
         this.fly_from = fly_from;
     }
@@ -32,6 +33,7 @@ public class SearchParams {
         if(fly_to != null) items.add("fly_to", fly_to);
         if(dateFrom != null) items.add("dateFrom", dateFrom);
         if(dateTo != null) items.add("dateTo", dateTo);
+        if(maxStopovers!= null) items.add("max_stopovers", maxStopovers);
         return items;
     }
 }

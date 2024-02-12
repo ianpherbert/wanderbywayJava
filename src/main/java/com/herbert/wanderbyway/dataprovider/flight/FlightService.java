@@ -71,6 +71,7 @@ public class FlightService implements FindFlightsFromAirport {
             SearchParams params = new SearchParams(iata);
             URI uri = buildUri("/search",params);
             FlightSearchResponse response = callApi(uri, HttpMethod.GET, FlightSearchResponse.class);
+            assert response != null;
             return flightSearchMapper.toRouteSearchItems(response.getData());
         }catch (Exception e){
             //LOG

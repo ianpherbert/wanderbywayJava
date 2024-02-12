@@ -19,8 +19,25 @@ public class RouteSearchItemPlace {
         this.iata = iata;
     }
 
+    public RouteSearchItemPlace(RouteSearchAirport airport){
+        this.name = airport.getName();
+        this.id = airport.getId();
+        this.type = RouteSearchItemPlaceType.AIRPORT;
+        this.longitude = airport.getLongitude();
+        this.latitude = airport.getLongitude();
+        this.iata = airport.getIata();
+    }
+
     public static RouteSearchItemPlace buildSearchAirport(String iata){
         return new RouteSearchItemPlace(null, null, RouteSearchItemPlaceType.AIRPORT, null, null, null, iata);
+    }
+
+    public void completeFromAirport(RouteSearchAirport airport){
+        this.id = airport.getId();
+        this.latitude = airport.getLatitude();
+        this.longitude = airport.getLongitude();
+        this.country = airport.getCountry();
+        this.name = airport.getName();
     }
 
     public String getName() {
@@ -69,5 +86,13 @@ public class RouteSearchItemPlace {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getIata() {
+        return iata;
+    }
+
+    public void setIata(String iata) {
+        this.iata = iata;
     }
 }

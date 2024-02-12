@@ -12,6 +12,11 @@ public class RouteSearchItem {
         this.durationMinutes = durationMinutes;
     }
 
+    public void completePlaces(RouteSearchAirport toAirport, RouteSearchAirport fromAirport){
+        this.origin = new RouteSearchItemPlace(fromAirport);
+        this.destination.completeFromAirport(toAirport);
+    }
+
     public RouteSearchItemType getType() {
         return type;
     }
