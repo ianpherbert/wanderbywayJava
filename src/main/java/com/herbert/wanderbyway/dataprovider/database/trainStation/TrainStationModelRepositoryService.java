@@ -1,6 +1,6 @@
 package com.herbert.wanderbyway.dataprovider.database.trainStation;
 
-import com.herbert.wanderbyway.core.search.SearchItem;
+import com.herbert.wanderbyway.core.search.entity.SearchItem;
 import com.herbert.wanderbyway.core.search.connectors.FindTrainStationsByName;
 import org.springframework.stereotype.Component;
 
