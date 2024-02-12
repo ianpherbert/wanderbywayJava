@@ -26,6 +26,7 @@ public class RouteSearchItemPlace {
         this.longitude = airport.getLongitude();
         this.latitude = airport.getLongitude();
         this.iata = airport.getIata();
+        this.country = airport.getCountry();
     }
 
     public static RouteSearchItemPlace buildSearchAirport(String iata){
@@ -49,7 +50,8 @@ public class RouteSearchItemPlace {
     }
 
     public String getId() {
-        return id;
+        if(id != null) return id;
+        return "";
     }
 
     public void setId(String id) {

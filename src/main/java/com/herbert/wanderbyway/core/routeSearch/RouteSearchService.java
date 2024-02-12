@@ -41,7 +41,18 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
                     ArrayList<RouteSearchItem> result = new ArrayList<>();
 
                     flights.forEach(flight -> {
-                        destinations.stream().filter(destination -> destination.getIata().equals(flight.getDestination().getIata())).findAny().ifPresent(match -> flight.completePlaces(match, origin));
+                        destinations.stream().filter(destination ->
+                                destination
+                                        .getIata()
+                                        .equals(
+                                                flight
+                                                        .getDestination()
+                                                        .getIata()
+                                        )
+                        )
+                                .findAny()
+                                .ifPresent(match -> flight.completePlaces(match, origin)
+                        );
                         result.add(flight);
                     });
 
