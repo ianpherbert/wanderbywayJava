@@ -1,39 +1,41 @@
 package com.herbert.wanderbyway.dataprovider.flight.entity;
 
-import org.antlr.v4.runtime.misc.MultiMap;
+import com.herbert.wanderbyway.utils.DateUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 public class SearchParams {
-    // date from
-    String fly_from;
-    // date to
-    String fly_to;
+    String origin;
+    String destination;
     String dateFrom;
     String dateTo;
 
     String maxStopovers = "0";
-    public SearchParams(String fly_from) {
-        this.fly_from = fly_from;
+    String onePerCity = "true";
+    public SearchParams(String origin) {
+        this.origin = origin;
     }
 
-    public SearchParams(String fly_from, String fly_to, String dateFrom, String dateTo) {
-        this.fly_from = fly_from;
-        this.fly_to = fly_to;
+    public SearchParams(String origin, String destination, String dateFrom, String dateTo) {
+        this.origin = origin;
+        this.destination = destination;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
     }
 
     public MultiValueMap<String, String> toMap(){
+
         MultiValueMap<String, String> items = new LinkedMultiValueMap<>();
-        if(fly_from != null) items.add("fly_from", fly_from);
-        if(fly_to != null) items.add("fly_to", fly_to);
-        if(dateFrom != null) items.add("dateFrom", dateFrom);
-        if(dateTo != null) items.add("dateTo", dateTo);
+        if(origin != null) items.add("fly_from", origin);
+        if(destination != null) items.add("fly_to", destination);
+        items.add("dateFrom", Objects.requireNonNullElseGet(dateFrom, DateUtils::getTodayString));
+        items.add("dateTo", Objects.requireNonNullElseGet(dateTo, () -> DateUtils.weeksFromNowString(15)));
         if(maxStopovers!= null) items.add("max_stopovers", maxStopovers);
+        if(onePerCity != null) items.add("one_for_city", onePerCity);
+        items.add("limit", "1000");
+        items.add("sort", "duration");
         return items;
     }
 }

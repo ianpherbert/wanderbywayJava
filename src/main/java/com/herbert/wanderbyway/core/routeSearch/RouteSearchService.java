@@ -32,38 +32,38 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
     public List<RouteSearchItem> findRoutes(int id, RouteSearchItemPlaceType type) {
         switch (type){
             case AIRPORT -> {
-                RouteSearchAirport origin = findAirportById.findById(id);
-                List<RouteSearchItem> flights = findFlightsFromAirport.findFlights(origin.getIata());
-                if(flights != null){
-                    List<String> iatas = flights.stream().map(it -> it.getDestination().getIata()).toList();
-                    List<RouteSearchAirport> destinations = findAirportsFromIata.findFromIataIn(iatas);
-
-                    ArrayList<RouteSearchItem> result = new ArrayList<>();
-
-                    flights.forEach(flight -> {
-                        destinations.stream().filter(destination ->
-                                destination
-                                        .getIata()
-                                        .equals(
-                                                flight
-                                                        .getDestination()
-                                                        .getIata()
-                                        )
-                        )
-                                .findAny()
-                                .ifPresent(match -> flight.completePlaces(match, origin)
-                        );
-                        result.add(flight);
-                    });
-
-                    return result;
-                }
-                return new ArrayList<>();
+                return this.getFlightRoutes(id);
             }
             default -> {
                 return null;
             }
         }
 
+    }
+
+    private List<RouteSearchItem> getFlightRoutes(int id){
+        RouteSearchAirport origin = findAirportById.findById(id);
+        List<RouteSearchItem> flights = findFlightsFromAirport.findFlights(origin.getIata());
+        if(flights == null) return new ArrayList<>();
+
+        List<String> iatas = flights.stream().map(it -> it.getDestination().getIata()).toList();
+        List<RouteSearchAirport> destinations = findAirportsFromIata.findFromIataIn(iatas);
+
+        ArrayList<RouteSearchItem> result = new ArrayList<>();
+
+        flights.forEach(flight -> {
+            RouteSearchAirport match = destinations
+                    .stream()
+                    .filter(destination -> destination.getIata().equals(flight.getDestinationIata()))
+                    .findAny()
+                    .orElse(null);
+
+            if(match != null){
+                flight.completePlaces(match, origin);
+                result.add(flight);
+            }
+        });
+
+        return result;
     }
 }

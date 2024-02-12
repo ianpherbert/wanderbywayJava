@@ -48,4 +48,8 @@ public class RouteSearchItem {
     public void setDurationMinutes(int durationMinutes) {
         this.durationMinutes = durationMinutes;
     }
+
+    public String getDestinationIata(){
+        return this.destination.getIata();
+    }
 }
