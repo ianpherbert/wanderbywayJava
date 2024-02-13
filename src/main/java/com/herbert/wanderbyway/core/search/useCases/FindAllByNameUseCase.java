@@ -1,7 +1,7 @@
 package com.herbert.wanderbyway.core.search.useCases;
 
-import com.herbert.wanderbyway.core.search.SearchItem;
-import com.herbert.wanderbyway.core.search.SearchOptions;
+import com.herbert.wanderbyway.core.search.entity.SearchItem;
+import com.herbert.wanderbyway.core.search.entity.SearchOptions;
 
 import java.util.List;
 

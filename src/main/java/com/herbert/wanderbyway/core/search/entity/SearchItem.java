@@ -1,4 +1,4 @@
-package com.herbert.wanderbyway.core.search;
+package com.herbert.wanderbyway.core.search.entity;
 
 import java.util.List;
 

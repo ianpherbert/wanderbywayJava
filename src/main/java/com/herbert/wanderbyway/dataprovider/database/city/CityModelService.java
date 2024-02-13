@@ -1,6 +1,6 @@
 package com.herbert.wanderbyway.dataprovider.database.city;
 
-import com.herbert.wanderbyway.core.search.SearchItem;
+import com.herbert.wanderbyway.core.search.entity.SearchItem;
 import com.herbert.wanderbyway.core.search.connectors.FindCitiesByName;
 import org.springframework.stereotype.Component;
 

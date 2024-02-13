@@ -1,7 +1,7 @@
 package com.herbert.wanderbyway.dataprovider.database.trainStation;
 
-import com.herbert.wanderbyway.core.search.SearchItem;
-import com.herbert.wanderbyway.core.search.SearchItemType;
+import com.herbert.wanderbyway.core.search.entity.SearchItem;
+import com.herbert.wanderbyway.core.search.entity.SearchItemType;
 import org.mapstruct.Mapper;
 
 import java.util.List;

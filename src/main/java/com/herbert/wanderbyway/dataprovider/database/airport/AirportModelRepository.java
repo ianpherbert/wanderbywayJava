@@ -5,4 +5,8 @@ import java.util.List;
 
 public interface AirportModelRepository  extends JpaRepository<AirportModel, Long> {
     List<AirportModel> findBySlugContaining(String slug);
+    List<AirportModel> findByIataIn(List<String> iatas);
+
+    AirportModel findByIata(String iata);
+    AirportModel findById(int id);
 }

@@ -1,7 +1,8 @@
 package com.herbert.wanderbyway.dataprovider.database.airport;
 
-import com.herbert.wanderbyway.core.search.SearchItem;
-import com.herbert.wanderbyway.core.search.SearchItemType;
+import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchAirport;
+import com.herbert.wanderbyway.core.search.entity.SearchItem;
+import com.herbert.wanderbyway.core.search.entity.SearchItemType;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -15,4 +16,7 @@ public abstract class AirportModelMapper {
     List<SearchItem> toSearchResults(List<AirportModel> airports){
         return airports.stream().map(this::toSearchResult).toList();
     }
+
+    abstract List<RouteSearchAirport> toRouteSearchAirport(List<AirportModel> airports);
+    abstract RouteSearchAirport toRouteSearchAirport(AirportModel airport);
 }
