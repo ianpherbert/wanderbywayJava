@@ -68,7 +68,8 @@ public class FlightService implements FindFlightsFromAirport {
     @Override
     public List<RouteSearchItem> findFlights(String iata) {
         try{
-            SearchParams params = new SearchParams(iata);
+            SearchParams params = new SearchParams();
+                params.setOrigin(iata);
             URI uri = buildUri("/search",params);
             FlightSearchResponse response = callApi(uri, HttpMethod.GET, FlightSearchResponse.class);
             assert response != null;
