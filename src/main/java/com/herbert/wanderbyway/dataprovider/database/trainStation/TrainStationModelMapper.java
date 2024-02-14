@@ -1,5 +1,6 @@
 package com.herbert.wanderbyway.dataprovider.database.trainStation;
 
+import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchTrainStation;
 import com.herbert.wanderbyway.core.search.entity.SearchItem;
 import com.herbert.wanderbyway.core.search.entity.SearchItemType;
 import org.mapstruct.Mapper;
@@ -15,4 +16,7 @@ public abstract class TrainStationModelMapper {
     List<SearchItem> toSearchResults(List<TrainStationModel> stations){
         return stations.stream().map(this::toSearchResult).toList();
     }
+
+    abstract List<RouteSearchTrainStation> toRouteSearchTrainStation(List<TrainStationModel> station);
+    abstract RouteSearchTrainStation toRouteSearchTrainStation(TrainStationModel station);
 }

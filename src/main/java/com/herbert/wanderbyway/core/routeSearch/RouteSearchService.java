@@ -1,12 +1,9 @@
 package com.herbert.wanderbyway.core.routeSearch;
 
-import com.herbert.wanderbyway.core.routeSearch.connectors.FindAirportById;
-import com.herbert.wanderbyway.core.routeSearch.connectors.FindAirportsFromIata;
-import com.herbert.wanderbyway.core.routeSearch.connectors.FindFlightsFromAirport;
-import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchAirport;
-import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItem;
-import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItemPlaceType;
+import com.herbert.wanderbyway.core.routeSearch.connectors.*;
+import com.herbert.wanderbyway.core.routeSearch.entity.*;
 import com.herbert.wanderbyway.core.routeSearch.useCases.FindRoutesFromPlaceUseCase;
+import com.herbert.wanderbyway.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,24 +12,42 @@ import java.util.List;
 @Service
 public class RouteSearchService implements FindRoutesFromPlaceUseCase {
     FindFlightsFromAirport findFlightsFromAirport;
+    FindRoutesFromDbId findRoutesFromDbId;
     FindAirportsFromIata findAirportsFromIata;
-
     FindAirportById findAirportById;
+    FindStationById findStationById;
+    FindStationsFromDbId findStationsFromDbId;
+
     public RouteSearchService(
             FindFlightsFromAirport findFlightsFromAirport,
             FindAirportsFromIata findAirportsFromIata,
-            FindAirportById findAirportById
+            FindAirportById findAirportById,
+            FindRoutesFromDbId findRoutesFromDbId,
+            FindStationsFromDbId findStationsFromDbId,
+            FindStationById findStationById
     ) {
         this.findFlightsFromAirport = findFlightsFromAirport;
         this.findAirportsFromIata = findAirportsFromIata;
         this.findAirportById = findAirportById;
+        this.findRoutesFromDbId = findRoutesFromDbId;
+        this.findStationsFromDbId = findStationsFromDbId;
+        this.findStationById = findStationById;
     }
 
     @Override
-    public List<RouteSearchItem> findRoutes(int id, RouteSearchItemPlaceType type) {
+    public RouteSearchResult findRoutes(int id, RouteSearchItemPlaceType type) {
         switch (type){
             case AIRPORT -> {
-                return this.getFlightRoutes(id);
+                RouteSearchAirport origin = findAirportById.findById(id);
+                if(origin == null) throw new NotFoundException("Could not find airport for id: ".concat(String.valueOf(id)));
+                List<RouteSearchItem> results = this.getFlightRoutes(id, origin);
+                return new RouteSearchResult(results, new RouteSearchItemPlace(origin));
+            }
+            case TRAIN_STATION -> {
+                RouteSearchTrainStation origin = findStationById.findById(id);
+                if(origin == null) throw new NotFoundException("Could not find station for id: ".concat(String.valueOf(id)));
+                List<RouteSearchItem> results = this.getTrainRoutes(id, origin);
+                return new RouteSearchResult(results, new RouteSearchItemPlace(origin));
             }
             default -> {
                 return null;
@@ -41,8 +56,31 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
 
     }
 
-    private List<RouteSearchItem> getFlightRoutes(int id){
-        RouteSearchAirport origin = findAirportById.findById(id);
+    private List<RouteSearchItem> getTrainRoutes(int id, RouteSearchTrainStation origin){
+        if(!origin.hasDbId()) return new ArrayList<>();
+        List<RouteSearchItem> routes = findRoutesFromDbId.findRoutesWithDbId(origin.getDbId());
+        List<String> dbIds = routes.stream().map(it -> it.getDestination().getDbId()).toList();
+        List<RouteSearchTrainStation> destinations = findStationsFromDbId.findFromDbId(dbIds);
+
+        ArrayList<RouteSearchItem> result = new ArrayList<>();
+
+        routes.forEach(route -> {
+            RouteSearchTrainStation match = destinations
+                    .stream()
+                    .filter(destination -> destination.getDbId().equals(route.getDestinationDbId()))
+                    .findAny()
+                    .orElse(null);
+
+            if(match != null){
+                route.completePlaces(match, origin);
+                result.add(route);
+            }
+        });
+
+        return result;
+    }
+
+    private List<RouteSearchItem> getFlightRoutes(int id, RouteSearchAirport origin){
         List<RouteSearchItem> flights = findFlightsFromAirport.findFlights(origin.getIata());
         if(flights == null) return new ArrayList<>();
 

@@ -6,6 +6,13 @@ public class RouteSearchItem {
     RouteSearchItemPlace destination;
     int durationMinutes;
 
+    public RouteSearchItem(RouteSearchItemType type, RouteSearchItemPlace destination, RouteSearchItemPlace origin, int durationMinutes) {
+        this.type = type;
+        this.destination = destination;
+        this.durationMinutes = durationMinutes;
+        this.origin = origin;
+    }
+
     public RouteSearchItem(RouteSearchItemType type, RouteSearchItemPlace destination, int durationMinutes) {
         this.type = type;
         this.destination = destination;
@@ -14,7 +21,12 @@ public class RouteSearchItem {
 
     public void completePlaces(RouteSearchAirport toAirport, RouteSearchAirport fromAirport){
         this.origin = new RouteSearchItemPlace(fromAirport);
-        this.destination.completeFromAirport(toAirport);
+        this.destination.complete(toAirport);
+    }
+
+    public void completePlaces(RouteSearchTrainStation toStation, RouteSearchTrainStation fromStation){
+        this.origin = new RouteSearchItemPlace(fromStation);
+        this.destination.complete(toStation);
     }
 
     public RouteSearchItemType getType() {
@@ -51,5 +63,8 @@ public class RouteSearchItem {
 
     public String getDestinationIata(){
         return this.destination.getIata();
+    }
+    public String getDestinationDbId(){
+        return this.destination.getDbId();
     }
 }

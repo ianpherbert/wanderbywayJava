@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TrainStationModelRepository  extends JpaRepository<TrainStationModel, Long> {
     List<TrainStationModel> findBySlugContaining(String slug);
+    TrainStationModel findById(int id);
+    List<TrainStationModel> findByDbIdIn(List<String> dbIds);
 }

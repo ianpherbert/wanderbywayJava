@@ -1,8 +1,7 @@
 package com.herbert.wanderbyway.entryPoint.rest.test;
 
+import com.herbert.wanderbyway.core.routeSearch.connectors.FindRoutesFromDbId;
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItem;
-import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItemPlaceType;
-import com.herbert.wanderbyway.core.routeSearch.useCases.FindRoutesFromPlaceUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +14,10 @@ import java.util.List;
 @RequestMapping("/test")
 public class TestRestController {
     @Autowired
-    FindRoutesFromPlaceUseCase findRoutesFromPlaceUseCase;
+    FindRoutesFromDbId findRoutesFromDbId;
 
-    @GetMapping("/airport/{id}")
-    List<RouteSearchItem> getFlights(@PathVariable int id){
-        return findRoutesFromPlaceUseCase.findRoutes(id, RouteSearchItemPlaceType.AIRPORT);
+    @GetMapping("/station/{id}")
+    List<RouteSearchItem> getFlights(@PathVariable String id){
+        return findRoutesFromDbId.findRoutesWithDbId(id);
     }
 }

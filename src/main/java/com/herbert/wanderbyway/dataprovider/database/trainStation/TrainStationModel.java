@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "stations", schema = "public")
+@Table(name = "station", schema = "public")
 public class TrainStationModel {
 
     public TrainStationModel() {
@@ -39,145 +39,145 @@ public class TrainStationModel {
     @Column(name = "longitude")
     private String longitude;
 
-    @Column(name = "parentStationId")
+    @Column(name = "\"parentStationId\"")
     private String parentStationId;
 
     @Column(name = "country")
     private String country;
 
-    @Column(name = "timeZone")
+    @Column(name = "\"timeZone\"")
     private String timeZone;
 
-    @Column(name = "isCity")
+    @Column(name = "\"isCity\"")
     private Boolean isCity;
 
-    @Column(name = "isMainStation")
+    @Column(name = "\"isMainStation\"")
     private Boolean isMainStation;
 
-    @Column(name = "isAirport")
+    @Column(name = "\"isAirport\"")
     private Boolean isAirport;
 
-    @Column(name = "sncfId")
+    @Column(name = "\"sncfId\"")
     private String sncfId;
 
-    @Column(name = "sncfTvsId")
+    @Column(name = "\"sncfTvsId\"")
     private String sncfTvsId;
 
-    @Column(name = "sncfIsEnabled")
+    @Column(name = "\"sncfIsEnabled\"")
     private Boolean sncfIsEnabled;
 
-    @Column(name = "enturId")
+    @Column(name = "\"enturId\"")
     private String enturId;
 
-    @Column(name = "enturIsEnabled")
+    @Column(name = "\"enturIsEnabled\"")
     private Boolean enturIsEnabled;
 
-    @Column(name = "dbId")
+    @Column(name = "\"dbId\"")
     private String dbId;
 
-    @Column(name = "dbIsEnabled")
+    @Column(name = "\"dbIsEnabled\"")
     private Boolean dbIsEnabled;
 
-    @Column(name = "busbudId")
+    @Column(name = "\"busbudId\"")
     private String busbudId;
 
-    @Column(name = "busbudIsEnabled")
+    @Column(name = "\"busbudIsEnabled\"")
     private Boolean busbudIsEnabled;
 
-    @Column(name = "distribusionId")
+    @Column(name = "\"distribusionId\"")
     private String distribusionId;
 
-    @Column(name = "distribusionIsEnabled")
+    @Column(name = "\"distribusionIsEnabled\"")
     private Boolean distribusionIsEnabled;
 
-    @Column(name = "flixbusId")
+    @Column(name = "\"flixbusId\"")
     private String flixbusId;
 
-    @Column(name = "flixbusIsEnabled")
+    @Column(name = "\"flixbusIsEnabled\"")
     private Boolean flixbusIsEnabled;
 
-    @Column(name = "cffId")
+    @Column(name = "\"cffId\"")
     private String cffId;
 
-    @Column(name = "cffIsEnabled")
+    @Column(name = "\"cffIsEnabled\"")
     private Boolean cffIsEnabled;
 
-    @Column(name = "leoexpressId")
+    @Column(name = "\"leoexpressId\"")
     private String leoexpressId;
 
-    @Column(name = "leoexpressIsEnabled")
+    @Column(name = "\"leoexpressIsEnabled\"")
     private Boolean leoexpressIsEnabled;
 
-    @Column(name = "obbId")
+    @Column(name = "\"obbId\"")
     private String obbId;
 
-    @Column(name = "obbIsEnabled")
+    @Column(name = "\"obbIsEnabled\"")
     private Boolean obbIsEnabled;
 
-    @Column(name = "ouigoId")
+    @Column(name = "\"ouigoId\"")
     private String ouigoId;
 
-    @Column(name = "ouigoIsEnabled")
+    @Column(name = "\"ouigoIsEnabled\"")
     private Boolean ouigoIsEnabled;
 
-    @Column(name = "trenitaliaId")
+    @Column(name = "\"trenitaliaId\"")
     private String trenitaliaId;
 
-    @Column(name = "trenitaliaIsEnabled")
+    @Column(name = "\"trenitaliaIsEnabled\"")
     private Boolean trenitaliaIsEnabled;
 
-    @Column(name = "trenitaliaRtvtId")
+    @Column(name = "\"trenitaliaRtvtId\"")
     private String trenitaliaRtvtId;
 
-    @Column(name = "trenordId")
+    @Column(name = "\"trenordId\"")
     private String trenordId;
 
-    @Column(name = "ntvRtivId")
+    @Column(name = "\"ntvRtivId\"")
     private String ntvRtivId;
 
-    @Column(name = "ntvId")
+    @Column(name = "\"ntvId\"")
     private String ntvId;
 
-    @Column(name = "ntvIsEnabled")
+    @Column(name = "\"ntvIsEnabled\"")
     private Boolean ntvIsEnabled;
 
-    @Column(name = "hkxId")
+    @Column(name = "\"hkxId\"")
     private String hkxId;
 
-    @Column(name = "hkxIsEnabled")
+    @Column(name = "\"hkxIsEnabled\"")
     private Boolean hkxIsEnabled;
 
-    @Column(name = "renfeId")
+    @Column(name = "\"renfeId\"")
     private String renfeId;
 
-    @Column(name = "renfeIsEnabled")
+    @Column(name = "\"renfeIsEnabled\"")
     private Boolean renfeIsEnabled;
 
-    @Column(name = "atocId")
+    @Column(name = "\"atocId\"")
     private String atocId;
 
-    @Column(name = "atocIsEnabled")
+    @Column(name = "\"atocIsEnabled\"")
     private Boolean atocIsEnabled;
 
-    @Column(name = "benerailId")
+    @Column(name = "\"benerailId\"")
     private String benerailId;
 
-    @Column(name = "benerailIsEnabled")
+    @Column(name = "\"benerailIsEnabled\"")
     private Boolean benerailIsEnabled;
 
-    @Column(name = "westbahnId")
+    @Column(name = "\"westbahnId\"")
     private String westbahnId;
 
-    @Column(name = "westbahnIsEnabled")
+    @Column(name = "\"westbahnIsEnabled\"")
     private Boolean westbahnIsEnabled;
 
-    @Column(name = "sncfSelfServiceMachine")
+    @Column(name = "\"sncfSelfServiceMachine\"")
     private Boolean sncfSelfServiceMachine;
 
-    @Column(name = "sameAs")
+    @Column(name = "\"sameAs\"")
     private String sameAs;
 
-    @Column(name = "normalisedCode")
+    @Column(name = "\"normalisedCode\"")
     private String normalisedCode;
 
     @ManyToOne
