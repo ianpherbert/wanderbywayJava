@@ -50,6 +50,15 @@ public class RouteSearchItemPlace {
         this.country = station.getCountry();
     }
 
+    public RouteSearchItemPlace(RouteSearchCity station){
+        this.name = station.getName();
+        this.id = station.getId();
+        this.type = RouteSearchItemPlaceType.TRAIN_STATION;
+        this.longitude = station.getLongitude();
+        this.latitude = station.getLongitude();
+        this.country = station.getCountry();
+    }
+
     public static RouteSearchItemPlace buildSearchAirport(String iata){
         return new RouteSearchItemPlace(null, null, RouteSearchItemPlaceType.AIRPORT, null, null, null, iata, null);
     }

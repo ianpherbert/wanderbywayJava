@@ -7,6 +7,7 @@ import com.herbert.wanderbyway.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
     FindAirportById findAirportById;
     FindStationById findStationById;
     FindStationsFromDbId findStationsFromDbId;
+    FindCityById findCityById;
 
     public RouteSearchService(
             FindFlightsFromAirport findFlightsFromAirport,
@@ -25,7 +27,8 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
             FindAirportById findAirportById,
             FindRoutesFromDbId findRoutesFromDbId,
             FindStationsFromDbId findStationsFromDbId,
-            FindStationById findStationById
+            FindStationById findStationById,
+            FindCityById findCityById
     ) {
         this.findFlightsFromAirport = findFlightsFromAirport;
         this.findAirportsFromIata = findAirportsFromIata;
@@ -33,6 +36,7 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
         this.findRoutesFromDbId = findRoutesFromDbId;
         this.findStationsFromDbId = findStationsFromDbId;
         this.findStationById = findStationById;
+        this.findCityById = findCityById;
     }
 
     @Override
@@ -40,13 +44,20 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
         switch (type){
             case AIRPORT -> {
                 return Optional.ofNullable(findAirportById.findById(id))
-                        .map(origin -> new RouteSearchResult(getFlightRoutes(id, origin), new RouteSearchItemPlace(origin)))
+                        .map(origin -> new RouteSearchResult(getFlightRoutes(origin), new RouteSearchItemPlace(origin)))
                         .orElseThrow(() -> new NotFoundException("Could not find airport for id: " + id));
             }
             case TRAIN_STATION -> {
                 return Optional.ofNullable(findStationById.findById(id))
-                        .map(origin -> new RouteSearchResult(getTrainRoutes(id, origin), new RouteSearchItemPlace(origin)))
+                        .map(origin -> new RouteSearchResult(getTrainRoutes(origin), new RouteSearchItemPlace(origin)))
                         .orElseThrow(() -> new NotFoundException("Could not find station for id: " + id));
+            }
+            case CITY -> {
+                RouteSearchCity origin = Optional.ofNullable(findCityById.findById(id)).orElseThrow(() -> new NotFoundException("Could not find city for id: " + id));
+                List<RouteSearchItem> routes = new LinkedList<RouteSearchItem>();
+                origin.getAirports().forEach(it -> routes.addAll(this.getFlightRoutes(it)));
+                origin.getStations().forEach(it -> routes.addAll(this.getTrainRoutes(it)));
+                return new RouteSearchResult(routes, new RouteSearchItemPlace(origin));
             }
             default -> {
                 throw new NotFoundException("Could not find station for id: " + id);
@@ -54,7 +65,7 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
         }
     }
 
-    private List<RouteSearchItem> getTrainRoutes(int id, RouteSearchTrainStation origin){
+    private List<RouteSearchItem> getTrainRoutes(RouteSearchTrainStation origin){
         if(!origin.hasDbId()) return new ArrayList<>();
         List<RouteSearchItem> routes = findRoutesFromDbId.findRoutesWithDbId(origin.getDbId());
         List<String> dbIds = routes.stream().map(it -> it.getDestination().getDbId()).toList();
@@ -78,7 +89,7 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
         return result;
     }
 
-    private List<RouteSearchItem> getFlightRoutes(int id, RouteSearchAirport origin){
+    private List<RouteSearchItem> getFlightRoutes(RouteSearchAirport origin){
         List<RouteSearchItem> flights = findFlightsFromAirport.findFlights(origin.getIata());
         if(flights == null) return new ArrayList<>();
 

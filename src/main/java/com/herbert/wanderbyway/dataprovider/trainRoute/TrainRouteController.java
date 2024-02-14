@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -62,7 +63,7 @@ public class TrainRouteController implements FindRoutesFromDbId {
             return trainRouteMapper.toRouteSearchItem(results.getDepartures());
         }catch (Exception e){
             System.out.println(e.getMessage());
-            return null;
+            return new ArrayList<>();
         }
     }
 }
