@@ -1,8 +1,9 @@
 package com.herbert.wanderbyway.dataprovider.database.trainStation;
 
-import com.herbert.wanderbyway.core.routeSearch.connectors.FindStationById;
+import com.herbert.wanderbyway.core.routeSearch.connectors.FindRouteSearchStationById;
 import com.herbert.wanderbyway.core.routeSearch.connectors.FindStationsFromDbId;
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchTrainStation;
+import com.herbert.wanderbyway.core.search.connectors.FindSearchStationById;
 import com.herbert.wanderbyway.core.search.entity.SearchItem;
 import com.herbert.wanderbyway.core.search.connectors.FindTrainStationsByName;
 import org.springframework.stereotype.Component;
@@ -10,12 +11,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class TrainStationModelRepositoryService implements FindTrainStationsByName, FindStationById, FindStationsFromDbId {
+public class TrainRouteSearchStationModelRepositoryService implements FindTrainStationsByName, FindRouteSearchStationById, FindStationsFromDbId, FindSearchStationById {
 
     TrainStationModelMapper trainStationModelMapper;
     TrainStationModelRepository trainStationModelRepository;
 
-    public TrainStationModelRepositoryService(TrainStationModelMapper trainStationModelMapper, TrainStationModelRepository trainStationModelRepository) {
+    public TrainRouteSearchStationModelRepositoryService(TrainStationModelMapper trainStationModelMapper, TrainStationModelRepository trainStationModelRepository) {
         this.trainStationModelMapper = trainStationModelMapper;
         this.trainStationModelRepository = trainStationModelRepository;
     }
@@ -27,7 +28,7 @@ public class TrainStationModelRepositoryService implements FindTrainStationsByNa
     }
 
     @Override
-    public RouteSearchTrainStation findById(int id) {
+    public RouteSearchTrainStation findRouteSearchStationById(int id) {
         TrainStationModel result = trainStationModelRepository.findById(id);
         if(result == null) return null;
         return trainStationModelMapper.toRouteSearchTrainStation(result);
@@ -38,5 +39,11 @@ public class TrainStationModelRepositoryService implements FindTrainStationsByNa
         List<TrainStationModel> results = trainStationModelRepository.findByDbIdIn(dbIds);
         if(results.isEmpty()) return null;
         return trainStationModelMapper.toRouteSearchTrainStation(results);
+    }
+
+    @Override
+    public SearchItem findSearchStationById(int id) {
+        TrainStationModel result = trainStationModelRepository.findById(id);
+        return trainStationModelMapper.toSearchResult(result);
     }
 }

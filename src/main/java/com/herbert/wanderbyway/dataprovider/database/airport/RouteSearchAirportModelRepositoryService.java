@@ -1,8 +1,9 @@
 package com.herbert.wanderbyway.dataprovider.database.airport;
 
-import com.herbert.wanderbyway.core.routeSearch.connectors.FindAirportById;
+import com.herbert.wanderbyway.core.routeSearch.connectors.FindRouteSearchAirportById;
 import com.herbert.wanderbyway.core.routeSearch.connectors.FindAirportsFromIata;
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchAirport;
+import com.herbert.wanderbyway.core.search.connectors.FindSearchAirportById;
 import com.herbert.wanderbyway.core.search.entity.SearchItem;
 import com.herbert.wanderbyway.core.search.connectors.FindAirportsByName;
 import org.springframework.stereotype.Component;
@@ -10,11 +11,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class AirportModelRepositoryService implements FindAirportsByName, FindAirportsFromIata, FindAirportById {
+public class RouteSearchAirportModelRepositoryService implements FindAirportsByName, FindAirportsFromIata, FindRouteSearchAirportById, FindSearchAirportById {
     AirportModelRepository airportModelRepository;
     AirportModelMapper airportModelMapper;
 
-    public AirportModelRepositoryService(AirportModelRepository airportModelRepository, AirportModelMapper airportModelMapper) {
+    public RouteSearchAirportModelRepositoryService(AirportModelRepository airportModelRepository, AirportModelMapper airportModelMapper) {
         this.airportModelRepository = airportModelRepository;
         this.airportModelMapper = airportModelMapper;
     }
@@ -39,8 +40,14 @@ public class AirportModelRepositoryService implements FindAirportsByName, FindAi
     }
 
     @Override
-    public RouteSearchAirport findById(int id) {
+    public RouteSearchAirport findRouteSearchAirportById(int id) {
         AirportModel result = airportModelRepository.findById(id);
         return airportModelMapper.toRouteSearchAirport(result);
+    }
+
+    @Override
+    public SearchItem findSearchAirportById(int id) {
+        AirportModel result = airportModelRepository.findById(id);
+        return airportModelMapper.toSearchResult(result);
     }
 }
