@@ -1,12 +1,13 @@
 package com.herbert.wanderbyway.dataprovider.flight.entity;
 
 import com.herbert.wanderbyway.utils.DateUtils;
+import com.herbert.wanderbyway.utils.rest.SearchParams;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.util.Objects;
 
-public class SearchParams {
+public class FlightSearchParams implements SearchParams {
     String origin;
     String destination;
     String dateFrom;
@@ -17,7 +18,7 @@ public class SearchParams {
     String maxStopovers = "0";
     String onePerCity = "true";
 
-    public SearchParams(){
+    public FlightSearchParams(){
 
     }
 
