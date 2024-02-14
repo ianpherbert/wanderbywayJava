@@ -16,44 +16,44 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
     FindFlightsFromAirport findFlightsFromAirport;
     FindRoutesFromDbId findRoutesFromDbId;
     FindAirportsFromIata findAirportsFromIata;
-    FindAirportById findAirportById;
-    FindStationById findStationById;
+    FindRouteSearchAirportById findRouteSearchAirportById;
+    FindRouteSearchStationById findRouteSearchStationById;
     FindStationsFromDbId findStationsFromDbId;
-    FindCityById findCityById;
+    FindRouteSearchCityById findRouteSearchCityById;
 
     public RouteSearchService(
             FindFlightsFromAirport findFlightsFromAirport,
             FindAirportsFromIata findAirportsFromIata,
-            FindAirportById findAirportById,
+            FindRouteSearchAirportById findRouteSearchAirportById,
             FindRoutesFromDbId findRoutesFromDbId,
             FindStationsFromDbId findStationsFromDbId,
-            FindStationById findStationById,
-            FindCityById findCityById
+            FindRouteSearchStationById findRouteSearchStationById,
+            FindRouteSearchCityById findRouteSearchCityById
     ) {
         this.findFlightsFromAirport = findFlightsFromAirport;
         this.findAirportsFromIata = findAirportsFromIata;
-        this.findAirportById = findAirportById;
+        this.findRouteSearchAirportById = findRouteSearchAirportById;
         this.findRoutesFromDbId = findRoutesFromDbId;
         this.findStationsFromDbId = findStationsFromDbId;
-        this.findStationById = findStationById;
-        this.findCityById = findCityById;
+        this.findRouteSearchStationById = findRouteSearchStationById;
+        this.findRouteSearchCityById = findRouteSearchCityById;
     }
 
     @Override
     public RouteSearchResult findRoutes(int id, RouteSearchItemPlaceType type) throws NotFoundException {
         switch (type){
             case AIRPORT -> {
-                return Optional.ofNullable(findAirportById.findById(id))
+                return Optional.ofNullable(findRouteSearchAirportById.findRouteSearchAirportById(id))
                         .map(origin -> new RouteSearchResult(getFlightRoutes(origin), new RouteSearchItemPlace(origin)))
                         .orElseThrow(() -> new NotFoundException("Could not find airport for id: " + id));
             }
             case TRAIN_STATION -> {
-                return Optional.ofNullable(findStationById.findById(id))
+                return Optional.ofNullable(findRouteSearchStationById.findRouteSearchStationById(id))
                         .map(origin -> new RouteSearchResult(getTrainRoutes(origin), new RouteSearchItemPlace(origin)))
                         .orElseThrow(() -> new NotFoundException("Could not find station for id: " + id));
             }
             case CITY -> {
-                RouteSearchCity origin = Optional.ofNullable(findCityById.findById(id)).orElseThrow(() -> new NotFoundException("Could not find city for id: " + id));
+                RouteSearchCity origin = Optional.ofNullable(findRouteSearchCityById.findRouteSearchCityById(id)).orElseThrow(() -> new NotFoundException("Could not find city for id: " + id));
                 List<RouteSearchItem> routes = new LinkedList<RouteSearchItem>();
                 origin.getAirports().forEach(it -> routes.addAll(this.getFlightRoutes(it)));
                 origin.getStations().forEach(it -> routes.addAll(this.getTrainRoutes(it)));

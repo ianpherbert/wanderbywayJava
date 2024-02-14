@@ -1,26 +1,39 @@
 package com.herbert.wanderbyway.core.search;
 
-import com.herbert.wanderbyway.core.search.connectors.FindAirportsByName;
-import com.herbert.wanderbyway.core.search.connectors.FindCitiesByName;
-import com.herbert.wanderbyway.core.search.connectors.FindTrainStationsByName;
+import com.herbert.wanderbyway.core.search.connectors.*;
 import com.herbert.wanderbyway.core.search.entity.SearchItem;
+import com.herbert.wanderbyway.core.search.entity.SearchItemType;
 import com.herbert.wanderbyway.core.search.entity.SearchOptions;
 import com.herbert.wanderbyway.core.search.useCases.FindAllByNameUseCase;
+import com.herbert.wanderbyway.core.search.useCases.FindByIdAndTypeUseCase;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class SearchService implements FindAllByNameUseCase {
+public class SearchService implements FindAllByNameUseCase, FindByIdAndTypeUseCase {
     FindCitiesByName findCitiesByName;
     FindAirportsByName findAirportsByName;
     FindTrainStationsByName findTrainStationsByName;
+    FindSearchStationById findSearchStationById;
+    FindSearchAirportById findSearchAirportById;
+    FindSearchCityById findSearchCityById;
 
-    public SearchService(FindCitiesByName findCitiesByName, FindAirportsByName findAirportsByName, FindTrainStationsByName findTrainStationsByName) {
+    public SearchService(
+            FindCitiesByName findCitiesByName,
+            FindAirportsByName findAirportsByName,
+            FindTrainStationsByName findTrainStationsByName,
+            FindSearchStationById findSearchStationById,
+            FindSearchAirportById findSearchAirportById,
+            FindSearchCityById findSearchCityById
+    ) {
         this.findCitiesByName = findCitiesByName;
         this.findAirportsByName = findAirportsByName;
         this.findTrainStationsByName = findTrainStationsByName;
+        this.findSearchStationById = findSearchStationById;
+        this.findSearchAirportById = findSearchAirportById;
+        this.findSearchCityById = findSearchCityById;
     }
 
     @Override
@@ -38,5 +51,23 @@ public class SearchService implements FindAllByNameUseCase {
         }
 
        return results;
+    }
+
+    @Override
+    public SearchItem findByIdAndType(int id, SearchItemType type) {
+        switch (type){
+            case CITY -> {
+                return findSearchCityById.findSearchCityById(id);
+            }
+            case TRAIN_STATION -> {
+                return findSearchStationById.findSearchStationById(id);
+            }
+            case AIRPORT -> {
+                return findSearchAirportById.findSearchAirportById(id);
+            }
+            default -> {
+                return null;
+            }
+        }
     }
 }
