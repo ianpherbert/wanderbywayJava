@@ -1,14 +1,13 @@
 package com.herbert.wanderbyway.entryPoint.rest.routeSearch;
 
-import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItem;
-import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItemPlace;
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItemPlaceType;
-import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItemType;
+import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchResult;
 import com.herbert.wanderbyway.core.routeSearch.useCases.FindRoutesFromPlaceUseCase;
-import com.herbert.wanderbyway.entryPoint.rest.routeSearch.entity.RouteSearchResult;
+import com.herbert.wanderbyway.entryPoint.rest.routeSearch.entity.RouteSearchQueryResult;
+import com.herbert.wanderbyway.exceptions.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/search/route")
@@ -20,17 +19,25 @@ public class RouteSearchRestController {
     public RouteSearchRestController(
             FindRoutesFromPlaceUseCase findRoutesFromPlaceUseCase,
             RouteSearchRestMapper routeSearchRestMapper
-            ) {
+    ) {
         this.findRoutesFromPlaceUseCase = findRoutesFromPlaceUseCase;
         this.routeSearchRestMapper = routeSearchRestMapper;
     }
 
     @GetMapping("/{id}")
-    RouteSearchResult getRoutes(
+    RouteSearchQueryResult getRoutes(
             @PathVariable int id,
             @RequestParam(required = true) RouteSearchItemPlaceType type
             ){
-        List<RouteSearchItem> routes = findRoutesFromPlaceUseCase.findRoutes(id, type);
-        return routeSearchRestMapper.toDestinationGroup(routes);
+        try{
+            RouteSearchResult routes = findRoutesFromPlaceUseCase.findRoutes(id, type);
+            return routeSearchRestMapper.toRouteSearchQueryResult(routes);
+        }catch (NotFoundException error){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Nothing fond for id: ".concat(String.valueOf(id)).concat("and type ").concat(type.name())
+            );
+        }
+
     }
 }

@@ -8,8 +8,18 @@ public class RouteSearchItemPlace {
     Double latitude;
     String country;
     String iata;
+    String dbId;
 
-    public RouteSearchItemPlace(String name, String id, RouteSearchItemPlaceType type, Double longitude, Double latitude, String country, String iata) {
+    public RouteSearchItemPlace(
+            String name,
+            String id,
+            RouteSearchItemPlaceType type,
+            Double longitude,
+            Double latitude,
+            String country,
+            String iata,
+            String dbId
+    ) {
         this.name = name;
         this.id = id;
         this.type = type;
@@ -17,6 +27,7 @@ public class RouteSearchItemPlace {
         this.latitude = latitude;
         this.country = country;
         this.iata = iata;
+        this.dbId = dbId;
     }
 
     public RouteSearchItemPlace(RouteSearchAirport airport){
@@ -29,16 +40,34 @@ public class RouteSearchItemPlace {
         this.country = airport.getCountry();
     }
 
-    public static RouteSearchItemPlace buildSearchAirport(String iata){
-        return new RouteSearchItemPlace(null, null, RouteSearchItemPlaceType.AIRPORT, null, null, null, iata);
+    public RouteSearchItemPlace(RouteSearchTrainStation station){
+        this.name = station.getName();
+        this.id = station.getId();
+        this.type = RouteSearchItemPlaceType.TRAIN_STATION;
+        this.longitude = station.getLongitude();
+        this.latitude = station.getLongitude();
+        this.dbId = station.getDbId();
+        this.country = station.getCountry();
     }
 
-    public void completeFromAirport(RouteSearchAirport airport){
+    public static RouteSearchItemPlace buildSearchAirport(String iata){
+        return new RouteSearchItemPlace(null, null, RouteSearchItemPlaceType.AIRPORT, null, null, null, iata, null);
+    }
+
+    public void complete(RouteSearchAirport airport){
         this.id = airport.getId();
         this.latitude = airport.getLatitude();
         this.longitude = airport.getLongitude();
         this.country = airport.getCountry();
         this.name = airport.getName();
+    }
+
+    public void complete(RouteSearchTrainStation station){
+        this.id = station.getId();
+        this.latitude = station.getLatitude();
+        this.longitude = station.getLongitude();
+        this.country = station.getCountry();
+        this.name = station.getName();
     }
 
     public String getName() {
@@ -96,5 +125,13 @@ public class RouteSearchItemPlace {
 
     public void setIata(String iata) {
         this.iata = iata;
+    }
+
+    public String getDbId() {
+        return dbId;
+    }
+
+    public void setDbId(String dbId) {
+        this.dbId = dbId;
     }
 }
