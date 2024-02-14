@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RouteSearchService implements FindRoutesFromPlaceUseCase {
@@ -35,25 +36,22 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
     }
 
     @Override
-    public RouteSearchResult findRoutes(int id, RouteSearchItemPlaceType type) {
+    public RouteSearchResult findRoutes(int id, RouteSearchItemPlaceType type) throws NotFoundException {
         switch (type){
             case AIRPORT -> {
-                RouteSearchAirport origin = findAirportById.findById(id);
-                if(origin == null) throw new NotFoundException("Could not find airport for id: ".concat(String.valueOf(id)));
-                List<RouteSearchItem> results = this.getFlightRoutes(id, origin);
-                return new RouteSearchResult(results, new RouteSearchItemPlace(origin));
+                return Optional.ofNullable(findAirportById.findById(id))
+                        .map(origin -> new RouteSearchResult(getFlightRoutes(id, origin), new RouteSearchItemPlace(origin)))
+                        .orElseThrow(() -> new NotFoundException("Could not find airport for id: " + id));
             }
             case TRAIN_STATION -> {
-                RouteSearchTrainStation origin = findStationById.findById(id);
-                if(origin == null) throw new NotFoundException("Could not find station for id: ".concat(String.valueOf(id)));
-                List<RouteSearchItem> results = this.getTrainRoutes(id, origin);
-                return new RouteSearchResult(results, new RouteSearchItemPlace(origin));
+                return Optional.ofNullable(findStationById.findById(id))
+                        .map(origin -> new RouteSearchResult(getTrainRoutes(id, origin), new RouteSearchItemPlace(origin)))
+                        .orElseThrow(() -> new NotFoundException("Could not find station for id: " + id));
             }
             default -> {
-                return null;
+                throw new NotFoundException("Could not find station for id: " + id);
             }
         }
-
     }
 
     private List<RouteSearchItem> getTrainRoutes(int id, RouteSearchTrainStation origin){

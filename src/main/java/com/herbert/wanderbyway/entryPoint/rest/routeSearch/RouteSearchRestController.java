@@ -4,7 +4,10 @@ import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItemPlaceType;
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchResult;
 import com.herbert.wanderbyway.core.routeSearch.useCases.FindRoutesFromPlaceUseCase;
 import com.herbert.wanderbyway.entryPoint.rest.routeSearch.entity.RouteSearchQueryResult;
+import com.herbert.wanderbyway.exceptions.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/search/route")
@@ -26,7 +29,15 @@ public class RouteSearchRestController {
             @PathVariable int id,
             @RequestParam(required = true) RouteSearchItemPlaceType type
             ){
-        RouteSearchResult routes = findRoutesFromPlaceUseCase.findRoutes(id, type);
-        return routeSearchRestMapper.toRouteSearchQueryResult(routes);
+        try{
+            RouteSearchResult routes = findRoutesFromPlaceUseCase.findRoutes(id, type);
+            return routeSearchRestMapper.toRouteSearchQueryResult(routes);
+        }catch (NotFoundException error){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Nothing fond for id: ".concat(String.valueOf(id)).concat("and type ").concat(type.name())
+            );
+        }
+
     }
 }
