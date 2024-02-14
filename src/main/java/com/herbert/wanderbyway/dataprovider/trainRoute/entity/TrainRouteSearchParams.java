@@ -2,15 +2,15 @@ package com.herbert.wanderbyway.dataprovider.trainRoute.entity;
 
 import com.herbert.wanderbyway.utils.DateFormat;
 import com.herbert.wanderbyway.utils.DateUtils;
+import com.herbert.wanderbyway.utils.rest.SearchParams;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 
-public class SearchParams {
+public class TrainRouteSearchParams implements SearchParams {
     String results; //int
     String duration; //int
     String when; //date
@@ -27,7 +27,7 @@ public class SearchParams {
     String tram;// boolean
     String taxi; //boolean
 
-    public SearchParams(){}
+    public TrainRouteSearchParams(){}
 
     public void setResults(int results) {
         this.results = String.valueOf(results);
