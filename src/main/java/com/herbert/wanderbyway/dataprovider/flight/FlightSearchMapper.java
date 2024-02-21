@@ -12,7 +12,15 @@ import java.util.List;
 public abstract class FlightSearchMapper {
     RouteSearchItem toRouteSearchItem(Flight flight){
         RouteSearchItemPlace to = RouteSearchItemPlace.buildSearchAirport(flight.getFlyTo());
-        return new RouteSearchItem(RouteSearchItemType.PLANE, to, flight.getDuration().getTotal() );
+        return new RouteSearchItem(
+                RouteSearchItemType.PLANE,
+                to,
+                flight.getDuration().getTotalMinutes(),
+                flight.getUtc_departure(),
+                flight.getUtc_arrival(),
+                flight.getAirlines(),
+                flight.getId()
+                );
     }
 
     List<RouteSearchItem> toRouteSearchItems(List<Flight> flights){

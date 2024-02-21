@@ -1,4 +1,4 @@
-package com.herbert.wanderbyway.dataprovider.trainRoute.entity;
+package com.herbert.wanderbyway.dataprovider.trainRoute.entity.departures;
 
 import com.herbert.wanderbyway.utils.DateFormat;
 import com.herbert.wanderbyway.utils.DateUtils;

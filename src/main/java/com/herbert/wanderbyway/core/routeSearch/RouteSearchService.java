@@ -2,6 +2,7 @@ package com.herbert.wanderbyway.core.routeSearch;
 
 import com.herbert.wanderbyway.core.routeSearch.connectors.*;
 import com.herbert.wanderbyway.core.routeSearch.entity.*;
+import com.herbert.wanderbyway.core.routeSearch.useCases.GetRouteDetailsUseCase;
 import com.herbert.wanderbyway.core.routeSearch.useCases.FindRoutesFromPlaceUseCase;
 import com.herbert.wanderbyway.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RouteSearchService implements FindRoutesFromPlaceUseCase {
+public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteDetailsUseCase {
     FindFlightsFromAirport findFlightsFromAirport;
     FindRoutesFromDbId findRoutesFromDbId;
     FindAirportsFromIata findAirportsFromIata;
@@ -20,6 +21,7 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
     FindRouteSearchStationById findRouteSearchStationById;
     FindStationsFromDbId findStationsFromDbId;
     FindRouteSearchCityById findRouteSearchCityById;
+    GetTrainRouteDetails getTrainRouteDetails;
 
     public RouteSearchService(
             FindFlightsFromAirport findFlightsFromAirport,
@@ -28,7 +30,8 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
             FindRoutesFromDbId findRoutesFromDbId,
             FindStationsFromDbId findStationsFromDbId,
             FindRouteSearchStationById findRouteSearchStationById,
-            FindRouteSearchCityById findRouteSearchCityById
+            FindRouteSearchCityById findRouteSearchCityById,
+            GetTrainRouteDetails getTrainRouteDetails
     ) {
         this.findFlightsFromAirport = findFlightsFromAirport;
         this.findAirportsFromIata = findAirportsFromIata;
@@ -37,6 +40,7 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
         this.findStationsFromDbId = findStationsFromDbId;
         this.findRouteSearchStationById = findRouteSearchStationById;
         this.findRouteSearchCityById = findRouteSearchCityById;
+        this.getTrainRouteDetails = getTrainRouteDetails;
     }
 
     @Override
@@ -112,5 +116,10 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase {
         });
 
         return result;
+    }
+
+    @Override
+    public RouteDetails findRouteDetails(String routeId) {
+        return getTrainRouteDetails.getRouteDetails(routeId);
     }
 }

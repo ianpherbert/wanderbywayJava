@@ -14,7 +14,7 @@ public class DestinationGroup {
         this.routes = items;
         this.destination = items.stream().findFirst().orElseThrow().getDestination();
         this.averageTime = items.stream()
-                .mapToInt(RouteSearchItem::getDurationMinutes)
+                .mapToLong(RouteSearchItem::getDurationMinutes)
                 .average().orElse(0);
     }
 
