@@ -122,4 +122,9 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteD
     public RouteDetails findRouteDetails(String routeId) {
         return getTrainRouteDetails.getRouteDetails(routeId);
     }
+
+    @Override
+    public List<RouteDetails> findRouteDetails(List<String> routeIds) {
+        return routeIds.stream().map(this::findRouteDetails).toList();
+    }
 }

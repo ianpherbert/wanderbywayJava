@@ -1,5 +1,8 @@
 package com.herbert.wanderbyway.core.routeSearch.entity;
 
+
+import java.util.List;
+
 public class RouteDetails {
     RouteSearchItemPlace origin;
     RouteSearchItemPlace destination;
@@ -8,8 +11,18 @@ public class RouteDetails {
     long duration;
     String routeId;
     RouteSearchItemType type;
+    List<RouteStop> stops;
+    List<String> operators;
 
-    public RouteDetails(RouteSearchItemPlace origin, RouteSearchItemPlace destination, String departure, String arrival, long duration, String routeId, RouteSearchItemType type) {
+    public RouteDetails(
+            RouteSearchItemPlace origin,
+            RouteSearchItemPlace destination,
+            String departure, String arrival,
+            long duration, String routeId,
+            RouteSearchItemType type,
+            List<RouteStop> stops,
+            List<String> operators
+    ) {
         this.origin = origin;
         this.destination = destination;
         this.departure = departure;
@@ -17,6 +30,8 @@ public class RouteDetails {
         this.duration = duration;
         this.routeId = routeId;
         this.type = type;
+        this.stops = stops;
+        this.operators = operators;
     }
 
     public RouteSearchItemPlace getOrigin() {
@@ -73,5 +88,13 @@ public class RouteDetails {
 
     public void setType(RouteSearchItemType type) {
         this.type = type;
+    }
+
+    public List<RouteStop> getStops() {
+        return stops;
+    }
+
+    public List<String> getOperators() {
+        return operators;
     }
 }

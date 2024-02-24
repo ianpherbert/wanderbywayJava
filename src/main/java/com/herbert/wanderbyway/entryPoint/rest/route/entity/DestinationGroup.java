@@ -1,4 +1,4 @@
-package com.herbert.wanderbyway.entryPoint.rest.routeSearch.entity;
+package com.herbert.wanderbyway.entryPoint.rest.route.entity;
 
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItem;
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItemPlace;

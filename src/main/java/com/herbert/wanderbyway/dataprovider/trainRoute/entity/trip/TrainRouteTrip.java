@@ -111,7 +111,7 @@ public class TrainRouteTrip {
         this.destination = destination;
     }
 
-    public TrainRouteLine getTrainRouteLine() {
+    public TrainRouteLine getLine() {
         return line;
     }
 

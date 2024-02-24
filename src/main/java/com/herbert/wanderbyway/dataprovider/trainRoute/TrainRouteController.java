@@ -16,6 +16,9 @@ import org.springframework.web.client.RestTemplate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @Service
 public class TrainRouteController implements FindRoutesFromDbId, GetTrainRouteDetails {
@@ -33,7 +36,7 @@ public class TrainRouteController implements FindRoutesFromDbId, GetTrainRouteDe
     @Override
     public List<RouteSearchItem> findRoutesWithDbId(String dbId) {
         TrainRouteSearchParams params = new TrainRouteSearchParams();
-            params.setWhen(ZonedDateTime.now().plusDays(7));
+            params.setWhen(ZonedDateTime.now());
             params.setDuration(1440);
             params.setResults(500);
         String path = "stops/".concat(dbId).concat("/departures");
@@ -58,6 +61,31 @@ public class TrainRouteController implements FindRoutesFromDbId, GetTrainRouteDe
         }catch (Exception e){
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+    private CompletableFuture<RouteDetails> getRouteDetailsAsync(String id) {
+        return CompletableFuture.supplyAsync(() -> getRouteDetails(id));
+    }
+    @Override
+    public List<RouteDetails> getRouteDetails(List<String> ids) {
+        List<CompletableFuture<RouteDetails>> futures = ids.stream()
+                .map(this::getRouteDetailsAsync)
+                .toList();
+
+        CompletableFuture<Void> allDoneFuture =
+                CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+
+        CompletableFuture<List<RouteDetails>> allCompletableFuture = allDoneFuture.thenApply(v ->
+                futures.stream().
+                        map(CompletableFuture::join).
+                        collect(Collectors.toList())
+        );
+
+        try {
+            return allCompletableFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println(e.getMessage());
+            return List.of();
         }
     }
 }

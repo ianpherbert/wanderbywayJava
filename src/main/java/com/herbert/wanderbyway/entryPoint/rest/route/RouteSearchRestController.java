@@ -1,15 +1,17 @@
-package com.herbert.wanderbyway.entryPoint.rest.routeSearch;
+package com.herbert.wanderbyway.entryPoint.rest.route;
 
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItemPlaceType;
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchResult;
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteDetails;
 import com.herbert.wanderbyway.core.routeSearch.useCases.GetRouteDetailsUseCase;
 import com.herbert.wanderbyway.core.routeSearch.useCases.FindRoutesFromPlaceUseCase;
-import com.herbert.wanderbyway.entryPoint.rest.routeSearch.entity.RouteSearchQueryResult;
+import com.herbert.wanderbyway.entryPoint.rest.route.entity.RouteSearchQueryResult;
 import com.herbert.wanderbyway.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/route")
@@ -47,8 +49,9 @@ public class RouteSearchRestController {
     }
 
     @GetMapping("/{id}")
-    RouteDetails getRouteDetails(@PathVariable String id){
-        return getRouteDetailsUseCase.findRouteDetails(id);
+    List<RouteDetails> getRouteDetails(@PathVariable String id){
+        List<String> ids = List.of(id.split(","));
+        return getRouteDetailsUseCase.findRouteDetails(ids);
     }
 
 }

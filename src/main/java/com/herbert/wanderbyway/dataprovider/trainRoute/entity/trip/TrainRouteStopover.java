@@ -3,17 +3,17 @@ package com.herbert.wanderbyway.dataprovider.trainRoute.entity.trip;
 import com.herbert.wanderbyway.dataprovider.trainRoute.entity.common.TrainRouteStop;
 
 public class TrainRouteStopover {
-    TrainRouteStop stop;
-    String arrival;
-    String plannedArrival;
-    String arrivalDelay;
-    String arrivalPlatform;
-    String arrivalPrognosisType;
-    String plannedDeparture;
-    String departureDelay;
-    String departurePlatform;
-    String departurePrognosisType;
-    String plannedDeparturePlatform;
+    private TrainRouteStop stop;
+    private String arrival;
+    private String plannedArrival;
+    private String arrivalDelay;
+    private String arrivalPlatform;
+    private String arrivalPrognosisType;
+    private String plannedDeparture;
+    private String departureDelay;
+    private String departurePlatform;
+    private String departurePrognosisType;
+    private String plannedDeparturePlatform;
 
     public TrainRouteStopover(){}
 

@@ -16,7 +16,7 @@ public class FlightSearchParams implements SearchParams {
     String sort = "duration";
 
     String maxStopovers = "0";
-    String onePerCity = "true";
+    String onePerCity;
 
     public FlightSearchParams(){
 

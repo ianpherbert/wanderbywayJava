@@ -1,7 +1,7 @@
-package com.herbert.wanderbyway.entryPoint.rest.routeSearch;
+package com.herbert.wanderbyway.entryPoint.rest.route;
 
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchResult;
-import com.herbert.wanderbyway.entryPoint.rest.routeSearch.entity.RouteSearchQueryResult;
+import com.herbert.wanderbyway.entryPoint.rest.route.entity.RouteSearchQueryResult;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
