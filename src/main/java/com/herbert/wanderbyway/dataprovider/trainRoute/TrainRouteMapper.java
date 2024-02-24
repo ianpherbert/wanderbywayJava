@@ -83,18 +83,24 @@ public abstract class TrainRouteMapper {
                 .getStopovers()
                 .stream()
                 .map(stop ->
-                        new RouteStop(
-                                stop.getStop().getName(),
-                                stop.getStop().getId(),
-                                stop.getStop().getLocation().getLatitude(),
-                                stop.getStop().getLocation().getLongitude(),
-                                stop.getArrival(),
-                                stop.getPlannedArrival(),
-                                stop.getArrivalDelay(),
-                                stop.getArrivalPlatform(),
-                                stop.getPlannedDeparture(),
-                                stop.getDepartureDelay()
-                        )
+                    new RouteStop(
+                            stop.getArrival(),
+                            stop.getPlannedArrival(),
+                            stop.getArrivalDelay(),
+                            stop.getArrivalPlatform(),
+                            stop.getPlannedDeparture(),
+                            stop.getDepartureDelay(),
+                            new RouteSearchItemPlace(
+                                    stop.getStop().getName(),
+                                    null,
+                                    RouteSearchItemPlaceType.TRAIN_STATION,
+                                    stop.getStop().getLocation().getLongitude(),
+                                    stop.getStop().getLocation().getLatitude(),
+                                    null,
+                                    null,
+                                    stop.getStop().getId()
+                                    )
+                    )
                 ).toList();
 
         return new RouteDetails(
