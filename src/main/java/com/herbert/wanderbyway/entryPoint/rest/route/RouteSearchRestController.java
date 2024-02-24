@@ -49,9 +49,9 @@ public class RouteSearchRestController {
     }
 
     @GetMapping("/{id}")
-    List<RouteDetails> getRouteDetails(@PathVariable String id){
+    List<RouteDetails> getRouteDetails(@PathVariable String id, @RequestParam(required = true) RouteSearchItemPlaceType type){
         List<String> ids = List.of(id.split(","));
-        return getRouteDetailsUseCase.findRouteDetails(ids);
+        return getRouteDetailsUseCase.findRouteDetails(ids, type);
     }
 
 }

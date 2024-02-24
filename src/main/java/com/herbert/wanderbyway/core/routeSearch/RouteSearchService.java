@@ -7,10 +7,7 @@ import com.herbert.wanderbyway.core.routeSearch.useCases.FindRoutesFromPlaceUseC
 import com.herbert.wanderbyway.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteDetailsUseCase {
@@ -124,7 +121,37 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteD
     }
 
     @Override
-    public List<RouteDetails> findRouteDetails(List<String> routeIds) {
-        return routeIds.stream().map(this::findRouteDetails).toList();
+    public List<RouteDetails> findRouteDetails(List<String> routeIds, RouteSearchItemPlaceType type) {
+        if (type == RouteSearchItemPlaceType.TRAIN_STATION) {
+            return this.findTrainRouteDetails(routeIds);
+        }
+        return null;
+    }
+
+    private List<RouteDetails> findTrainRouteDetails(List<String> routeIds){
+        List<RouteDetails> routes = routeIds.stream().map(this::findRouteDetails).toList();
+        List<String> dbIds = routes.stream().flatMap(RouteDetails::retrieveAllDbIds).toList();
+        List<String> uniqueList = new ArrayList<>(new HashSet<>(dbIds));
+
+        HashMap<String, RouteSearchTrainStation> stationHashMap = new HashMap<>();
+        findStationsFromDbId.findFromDbId(uniqueList).forEach(station -> stationHashMap.put(station.getDbId(), station));
+
+        routes.forEach(route -> {
+            RouteSearchTrainStation origin = stationHashMap.get(route.getOrigin().getDbId());
+            if(origin != null){
+                route.setOrigin(origin.toRouteSearchItemPlace());
+            }
+            RouteSearchTrainStation destination = stationHashMap.get(route.getDestination().getDbId());
+            if(destination != null){
+                route.setDestination(destination.toRouteSearchItemPlace());
+            }
+            route.getStops().forEach(stop -> {
+                RouteSearchTrainStation stopStation = stationHashMap.get(stop.getDbId());
+                if(stopStation != null){
+                    stop.setStop(stopStation.toRouteSearchItemPlace());
+                }
+            });
+        });
+        return routes;
     }
 }

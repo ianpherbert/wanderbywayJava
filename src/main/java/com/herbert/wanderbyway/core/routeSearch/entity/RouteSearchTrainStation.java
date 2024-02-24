@@ -62,4 +62,8 @@ public class RouteSearchTrainStation {
     public boolean hasDbId(){
         return this.dbId != null;
     }
+
+    public RouteSearchItemPlace toRouteSearchItemPlace(){
+        return new RouteSearchItemPlace(this);
+    }
 }

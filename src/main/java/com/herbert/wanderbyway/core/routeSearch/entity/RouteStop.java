@@ -3,7 +3,7 @@ package com.herbert.wanderbyway.core.routeSearch.entity;
 import com.herbert.wanderbyway.dataprovider.trainRoute.entity.common.TrainRouteStop;
 
 public class RouteStop {
-    private final RouteSearchItemPlace stop;
+    private RouteSearchItemPlace stop;
     private final String arrival;
     private final String plannedArrival;
     private final String arrivalDelay;
@@ -51,5 +51,17 @@ public class RouteStop {
 
     public String getDepartureDelay() {
         return departureDelay;
+    }
+
+    public RouteSearchItemPlace getStop() {
+        return stop;
+    }
+
+    public void setStop(RouteSearchItemPlace stop){
+        this.stop = stop;
+    }
+
+    public String getDbId(){
+        return stop.dbId;
     }
 }

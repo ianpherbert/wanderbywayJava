@@ -2,6 +2,7 @@ package com.herbert.wanderbyway.core.routeSearch.entity;
 
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class RouteDetails {
     RouteSearchItemPlace origin;
@@ -96,5 +97,9 @@ public class RouteDetails {
 
     public List<String> getOperators() {
         return operators;
+    }
+
+    public Stream<String> retrieveAllDbIds(){
+        return this.stops.stream().map(RouteStop::getDbId);
     }
 }
