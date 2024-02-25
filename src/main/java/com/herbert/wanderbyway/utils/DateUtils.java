@@ -36,6 +36,11 @@ public class DateUtils  {
         return date.format(formatter);
     }
 
+    public static String formatDateToString(Date date, DateFormat format){
+        SimpleDateFormat formatter = new SimpleDateFormat(format.getValue());
+        return formatter.format(date);
+    }
+
     public static LocalDateTime startOfDay(){
         LocalDate today = LocalDate.now();
         return today.atStartOfDay();

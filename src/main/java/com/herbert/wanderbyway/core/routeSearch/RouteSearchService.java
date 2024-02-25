@@ -96,7 +96,7 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteD
     }
 
     private List<RouteSearchItem> getFlightRoutes(RouteSearchAirport origin, Date startDate, Date endDate){
-        List<RouteSearchItem> flights = findFlightsFromAirport.findFlights(origin.getIata());
+        List<RouteSearchItem> flights = findFlightsFromAirport.findFlights(origin.getIata(), startDate, endDate);
         if(flights == null) return new ArrayList<>();
 
         List<String> iatas = flights.stream().map(it -> it.getDestination().getIata()).toList();

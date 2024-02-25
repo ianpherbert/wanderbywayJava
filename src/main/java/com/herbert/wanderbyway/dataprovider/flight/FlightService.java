@@ -5,6 +5,8 @@ import com.herbert.wanderbyway.core.routeSearch.connectors.FindFlightsFromAirpor
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItem;
 import com.herbert.wanderbyway.dataprovider.flight.entity.FlightSearchResponse;
 import com.herbert.wanderbyway.dataprovider.flight.entity.FlightSearchParams;
+import com.herbert.wanderbyway.utils.DateFormat;
+import com.herbert.wanderbyway.utils.DateUtils;
 import com.herbert.wanderbyway.utils.rest.Header;
 import com.herbert.wanderbyway.utils.rest.RestUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,10 +40,12 @@ public class FlightService implements FindFlightsFromAirport {
         this.restUtils = new RestUtils(restTemplate, baseUrl, List.of(new Header("apiKey", tequilaApiKey)));
     }
     @Override
-    public List<RouteSearchItem> findFlights(String iata) {
+    public List<RouteSearchItem> findFlights(String iata, Date startDate, Date endDate) {
         try{
             FlightSearchParams params = new FlightSearchParams();
             params.setOrigin(iata);
+            params.setDateFrom(DateUtils.formatDateToString(startDate, DateFormat.TEQUILA));
+            params.setDateTo(DateUtils.formatDateToString(endDate, DateFormat.TEQUILA));
             FlightSearchResponse response = restUtils.call("/search", HttpMethod.GET, params, FlightSearchResponse.class);
             if(response == null) return new ArrayList<>();
             return flightSearchMapper.toRouteSearchItems(response.getData());
