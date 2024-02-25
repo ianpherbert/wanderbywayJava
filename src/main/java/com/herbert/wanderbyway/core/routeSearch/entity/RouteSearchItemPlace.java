@@ -45,7 +45,7 @@ public class RouteSearchItemPlace {
         this.id = station.getId();
         this.type = RouteSearchItemPlaceType.TRAIN_STATION;
         this.longitude = station.getLongitude();
-        this.latitude = station.getLongitude();
+        this.latitude = station.getLatitude();
         this.dbId = station.getDbId();
         this.country = station.getCountry();
     }

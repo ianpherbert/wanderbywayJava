@@ -7,10 +7,13 @@ import com.herbert.wanderbyway.core.routeSearch.useCases.GetRouteDetailsUseCase;
 import com.herbert.wanderbyway.core.routeSearch.useCases.FindRoutesFromPlaceUseCase;
 import com.herbert.wanderbyway.entryPoint.rest.route.entity.RouteSearchQueryResult;
 import com.herbert.wanderbyway.exceptions.NotFoundException;
+import com.herbert.wanderbyway.utils.DateUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import com.herbert.wanderbyway.utils.DateFormat;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,10 +37,14 @@ public class RouteSearchRestController {
     @GetMapping("search/{id}")
     RouteSearchQueryResult getRoutes(
             @PathVariable int id,
-            @RequestParam(required = true) RouteSearchItemPlaceType type
+            @RequestParam(required = true) RouteSearchItemPlaceType type,
+            @RequestParam(required = true) String startDate,
+            @RequestParam(required = true) String endDate
             ){
         try{
-            RouteSearchResult routes = findRoutesFromPlaceUseCase.findRoutes(id, type);
+            Date start = DateUtils.parseDate(startDate, DateFormat.ENTRY.getValue());
+            Date end = DateUtils.parseDate(endDate, DateFormat.ENTRY.getValue());
+            RouteSearchResult routes = findRoutesFromPlaceUseCase.findRoutes(id, type, start, end);
             return routeSearchRestMapper.toRouteSearchQueryResult(routes);
         }catch (NotFoundException error){
             throw new ResponseStatusException(

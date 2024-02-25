@@ -41,23 +41,28 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteD
     }
 
     @Override
-    public RouteSearchResult findRoutes(int id, RouteSearchItemPlaceType type) throws NotFoundException {
+    public RouteSearchResult findRoutes(
+            int id,
+            RouteSearchItemPlaceType type,
+            Date startDate,
+            Date endDate
+    ) throws NotFoundException {
         switch (type){
             case AIRPORT -> {
                 return Optional.ofNullable(findRouteSearchAirportById.findRouteSearchAirportById(id))
-                        .map(origin -> new RouteSearchResult(getFlightRoutes(origin), new RouteSearchItemPlace(origin)))
+                        .map(origin -> new RouteSearchResult(getFlightRoutes(origin, startDate, endDate), new RouteSearchItemPlace(origin)))
                         .orElseThrow(() -> new NotFoundException("Could not find airport for id: " + id));
             }
             case TRAIN_STATION -> {
                 return Optional.ofNullable(findRouteSearchStationById.findRouteSearchStationById(id))
-                        .map(origin -> new RouteSearchResult(getTrainRoutes(origin), new RouteSearchItemPlace(origin)))
+                        .map(origin -> new RouteSearchResult(getTrainRoutes(origin, startDate, endDate), new RouteSearchItemPlace(origin)))
                         .orElseThrow(() -> new NotFoundException("Could not find station for id: " + id));
             }
             case CITY -> {
                 RouteSearchCity origin = Optional.ofNullable(findRouteSearchCityById.findRouteSearchCityById(id)).orElseThrow(() -> new NotFoundException("Could not find city for id: " + id));
                 List<RouteSearchItem> routes = new LinkedList<RouteSearchItem>();
-                origin.getAirports().forEach(it -> routes.addAll(this.getFlightRoutes(it)));
-                origin.getStations().forEach(it -> routes.addAll(this.getTrainRoutes(it)));
+                origin.getAirports().forEach(it -> routes.addAll(this.getFlightRoutes(it, startDate, endDate)));
+                origin.getStations().forEach(it -> routes.addAll(this.getTrainRoutes(it, startDate, endDate)));
                 return new RouteSearchResult(routes, new RouteSearchItemPlace(origin));
             }
             default -> {
@@ -66,9 +71,9 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteD
         }
     }
 
-    private List<RouteSearchItem> getTrainRoutes(RouteSearchTrainStation origin){
+    private List<RouteSearchItem> getTrainRoutes(RouteSearchTrainStation origin, Date startDate, Date endDate){
         if(!origin.hasDbId()) return new ArrayList<>();
-        List<RouteSearchItem> routes = findRoutesFromDbId.findRoutesWithDbId(origin.getDbId());
+        List<RouteSearchItem> routes = findRoutesFromDbId.findRoutesWithDbId(origin.getDbId(), startDate, endDate);
         List<String> dbIds = routes.stream().map(it -> it.getDestination().getDbId()).toList();
         List<RouteSearchTrainStation> destinations = findStationsFromDbId.findFromDbId(dbIds);
 
@@ -90,7 +95,7 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteD
         return result;
     }
 
-    private List<RouteSearchItem> getFlightRoutes(RouteSearchAirport origin){
+    private List<RouteSearchItem> getFlightRoutes(RouteSearchAirport origin, Date startDate, Date endDate){
         List<RouteSearchItem> flights = findFlightsFromAirport.findFlights(origin.getIata());
         if(flights == null) return new ArrayList<>();
 
