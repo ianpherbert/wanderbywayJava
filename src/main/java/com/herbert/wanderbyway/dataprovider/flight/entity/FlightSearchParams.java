@@ -16,7 +16,7 @@ public class FlightSearchParams implements SearchParams {
     String sort = "duration";
 
     String maxStopovers = "0";
-    String onePerCity = "true";
+    String onePerCity;
 
     public FlightSearchParams(){
 
@@ -60,7 +60,7 @@ public class FlightSearchParams implements SearchParams {
         if(origin != null) items.add("fly_from", origin);
         if(destination != null) items.add("fly_to", destination);
         items.add("dateFrom", Objects.requireNonNullElseGet(dateFrom, DateUtils::getTodayString));
-        items.add("dateTo", Objects.requireNonNullElseGet(dateTo, () -> DateUtils.weeksFromNowString(15)));
+        items.add("dateTo", Objects.requireNonNullElseGet(dateTo, () -> DateUtils.weeksFromNowString(7)));
         if(maxStopovers != null) items.add("max_stopovers", maxStopovers);
         if(onePerCity != null) items.add("one_for_city", onePerCity);
         if(limit != null) items.add("limit", limit);

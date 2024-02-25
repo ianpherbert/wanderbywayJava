@@ -1,6 +1,8 @@
-package com.herbert.wanderbyway.dataprovider.trainRoute.entity;
+package com.herbert.wanderbyway.dataprovider.trainRoute.entity.departures;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.herbert.wanderbyway.dataprovider.trainRoute.entity.common.TrainRouteLine;
+import com.herbert.wanderbyway.dataprovider.trainRoute.entity.common.TrainRouteStop;
 
 import java.util.List;
 
@@ -133,5 +135,9 @@ public class TrainRoute {
 
     public void setDestination(TrainRouteStop destination) {
         this.destination = destination;
+    }
+
+    public List<String> getProviders(){
+        return List.of(this.line.getOperator().getId());
     }
 }

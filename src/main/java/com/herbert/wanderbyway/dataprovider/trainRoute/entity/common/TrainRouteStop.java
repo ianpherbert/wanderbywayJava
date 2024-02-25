@@ -1,11 +1,13 @@
-package com.herbert.wanderbyway.dataprovider.trainRoute.entity;
+package com.herbert.wanderbyway.dataprovider.trainRoute.entity.common;
+
+import com.herbert.wanderbyway.dataprovider.trainRoute.entity.departures.TrainRouteStopProducts;
 
 public class TrainRouteStop {
-    String type;
-    String id;
-    String name;
-    TrainRouteStopLocation location;
-    TrainRouteStopProducts products;
+    private String type;
+    private String id;
+    private String name;
+    private TrainRouteStopLocation location;
+    private TrainRouteStopProducts products;
 
     public TrainRouteStop() {
     }

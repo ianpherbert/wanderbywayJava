@@ -29,6 +29,10 @@ public class Duration {
         return total;
     }
 
+    public int getTotalMinutes(){
+        return this.total / 60;
+    }
+
     public void setTotal(Integer total) {
         this.total = total;
     }

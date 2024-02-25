@@ -1,4 +1,4 @@
-package com.herbert.wanderbyway.dataprovider.trainRoute.entity;
+package com.herbert.wanderbyway.dataprovider.trainRoute.entity.departures;
 
 import java.util.List;
 

@@ -1,22 +1,55 @@
 package com.herbert.wanderbyway.core.routeSearch.entity;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+
 public class RouteSearchItem {
     RouteSearchItemType type;
     RouteSearchItemPlace origin;
     RouteSearchItemPlace destination;
-    int durationMinutes;
+    long durationMinutes;
+    String departureTime;
+    String arrivalTime;
+    List<String> carriers;
+    String routeId;
 
-    public RouteSearchItem(RouteSearchItemType type, RouteSearchItemPlace destination, RouteSearchItemPlace origin, int durationMinutes) {
+    public RouteSearchItem(
+            RouteSearchItemType type,
+            RouteSearchItemPlace destination,
+            RouteSearchItemPlace origin,
+            long durationMinutes,
+            String departureTime,
+            String arrivalTime,
+            List<String> carriers,
+            String routeId
+    ) {
         this.type = type;
         this.destination = destination;
         this.durationMinutes = durationMinutes;
         this.origin = origin;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.carriers = carriers;
+        this.routeId = routeId;
     }
 
-    public RouteSearchItem(RouteSearchItemType type, RouteSearchItemPlace destination, int durationMinutes) {
+    public RouteSearchItem(
+            RouteSearchItemType type,
+            RouteSearchItemPlace destination,
+            int durationMinutes,
+            String departureTime,
+            String arrivalTime,
+            List<String> carriers,
+            String routeId
+    ) {
         this.type = type;
         this.destination = destination;
         this.durationMinutes = durationMinutes;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.carriers = carriers;
+        this.routeId = routeId;
     }
 
     public void completePlaces(RouteSearchAirport toAirport, RouteSearchAirport fromAirport){
@@ -53,7 +86,7 @@ public class RouteSearchItem {
         this.destination = destination;
     }
 
-    public int getDurationMinutes() {
+    public long getDurationMinutes() {
         return durationMinutes;
     }
 
@@ -66,5 +99,37 @@ public class RouteSearchItem {
     }
     public String getDestinationDbId(){
         return this.destination.getDbId();
+    }
+
+    public String getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public String getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public List<String> getCarriers() {
+        return carriers;
+    }
+
+    public void setCarriers(List<String> carriers) {
+        this.carriers = carriers;
+    }
+
+    public String getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
     }
 }

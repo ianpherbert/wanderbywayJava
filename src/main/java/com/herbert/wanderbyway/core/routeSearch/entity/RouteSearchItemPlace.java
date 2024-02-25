@@ -45,18 +45,18 @@ public class RouteSearchItemPlace {
         this.id = station.getId();
         this.type = RouteSearchItemPlaceType.TRAIN_STATION;
         this.longitude = station.getLongitude();
-        this.latitude = station.getLongitude();
+        this.latitude = station.getLatitude();
         this.dbId = station.getDbId();
         this.country = station.getCountry();
     }
 
-    public RouteSearchItemPlace(RouteSearchCity station){
-        this.name = station.getName();
-        this.id = station.getId();
-        this.type = RouteSearchItemPlaceType.TRAIN_STATION;
-        this.longitude = station.getLongitude();
-        this.latitude = station.getLongitude();
-        this.country = station.getCountry();
+    public RouteSearchItemPlace(RouteSearchCity city){
+        this.name = city.getName();
+        this.id = city.getId();
+        this.type = RouteSearchItemPlaceType.CITY;
+        this.longitude = city.getLongitude();
+        this.latitude = city.getLongitude();
+        this.country = city.getCountry();
     }
 
     public static RouteSearchItemPlace buildSearchAirport(String iata){
