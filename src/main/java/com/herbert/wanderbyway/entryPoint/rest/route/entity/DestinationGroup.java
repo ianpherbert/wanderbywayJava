@@ -3,6 +3,12 @@ package com.herbert.wanderbyway.entryPoint.rest.route.entity;
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItem;
 import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItemPlace;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DestinationGroup {
@@ -28,5 +34,14 @@ public class DestinationGroup {
 
     public List<RouteSearchItem> getRoutes() {
         return routes;
+    }
+
+    public void sortByDateAsc(){
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        this.routes.sort((a, b)-> {
+            LocalDateTime departure1 = LocalDateTime.parse(a.getDepartureTime(), formatter);
+            LocalDateTime departure2 = LocalDateTime.parse(b.getDepartureTime(), formatter);
+            return departure1.compareTo(departure2);
+        });
     }
 }
