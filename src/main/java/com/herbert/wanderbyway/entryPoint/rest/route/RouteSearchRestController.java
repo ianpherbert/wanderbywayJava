@@ -38,18 +38,11 @@ public class RouteSearchRestController {
     RouteSearchQueryResult getRoutes(
             @PathVariable int id,
             @RequestParam() RouteSearchItemPlaceType type,
-            @RequestParam() String startDate,
-            @RequestParam(required = false) String endDate
-            ){
+            @RequestParam() String startDate
+    ){
         try{
             Date start = DateUtils.parseDate(startDate, DateFormat.ENTRY.getValue());
-            Date end;
-            if(endDate == null){
-                end = start;
-            }else{
-                end = DateUtils.parseDate(endDate, DateFormat.ENTRY.getValue());
-            }
-            RouteSearchResult routes = findRoutesFromPlaceUseCase.findRoutes(id, type, start, end);
+            RouteSearchResult routes = findRoutesFromPlaceUseCase.findRoutes(id, type, start, start);
             return routeSearchRestMapper.toRouteSearchQueryResult(routes);
         }catch (NotFoundException error){
             throw new ResponseStatusException(
