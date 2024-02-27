@@ -6,6 +6,7 @@ import com.herbert.wanderbyway.core.search.entity.SearchOptions;
 import com.herbert.wanderbyway.core.search.useCases.FindAllByNameUseCase;
 import com.herbert.wanderbyway.core.search.useCases.FindByIdAndTypeUseCase;
 import com.herbert.wanderbyway.utils.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
@@ -24,7 +25,7 @@ public class SearchRestController {
         this.findAllByNameUseCase = findAllByNameUseCase;
         this.findByIdAndTypeUseCase = findByIdAndTypeUseCase;
     }
-
+    @Cacheable("searchByName")
     @GetMapping("/{query}")
     SearchResult searchByName(
             @PathVariable String query,
@@ -40,7 +41,7 @@ public class SearchRestController {
         List<SearchItem> sortedResults = this.sortResultsBySimilarity(results, normalisedQueryString);
         return new SearchResult(results.size(), options, sortedResults);
     }
-
+    @Cacheable("searchById")
     @GetMapping("place/{id}")
     SearchItem findById(
             @PathVariable int id,

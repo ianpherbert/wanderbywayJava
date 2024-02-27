@@ -8,6 +8,7 @@ import com.herbert.wanderbyway.core.routeSearch.useCases.FindRoutesFromPlaceUseC
 import com.herbert.wanderbyway.entryPoint.rest.route.entity.RouteSearchQueryResult;
 import com.herbert.wanderbyway.exceptions.NotFoundException;
 import com.herbert.wanderbyway.utils.DateUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -34,6 +35,7 @@ public class RouteSearchRestController {
         this.getRouteDetailsUseCase = getRouteDetailsUseCase;
     }
 
+    @Cacheable("routeSearch")
     @GetMapping("search/{id}")
     RouteSearchQueryResult getRoutes(
             @PathVariable int id,
@@ -53,6 +55,7 @@ public class RouteSearchRestController {
 
     }
 
+    @Cacheable("routeDetails")
     @GetMapping("/{id}")
     List<RouteDetails> getRouteDetails(@PathVariable String id, @RequestParam(required = true) RouteSearchItemPlaceType type){
         List<String> ids = List.of(id.split(","));
