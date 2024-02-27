@@ -23,7 +23,7 @@ public class TrainRouteSearchStationModelRepositoryService implements FindTrainS
 
     @Override
     public List<SearchItem> findByName(String query) {
-        List<TrainStationModel> results = trainStationModelRepository.findBySlugContaining(query);
+        List<TrainStationModel> results = trainStationModelRepository.findBySlugContainingAndDbIdIsPresent(query);
         return trainStationModelMapper.toSearchResults(results);
     }
 
