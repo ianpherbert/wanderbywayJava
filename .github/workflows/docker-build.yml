@@ -39,6 +39,9 @@ jobs:
           push: true
           tags: ianpherbert/wander-by-way-travel-api:latest
 
+      - name: Generate deployment package
+        run: zip -r deploy.zip Dockerrun.aws.json
+
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v18
         with:
