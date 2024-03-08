@@ -43,7 +43,7 @@ public class SearchRestController {
     }
     @Cacheable("searchById")
     @GetMapping("place/{id}")
-    SearchItem findById(
+    SearchItem getById(
             @PathVariable int id,
             @RequestParam(required = true) SearchItemType type
     ){
