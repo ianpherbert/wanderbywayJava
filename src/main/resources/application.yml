@@ -11,11 +11,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    show-sql: true
 tequila:
   apiKey: BhUIsil5ss0_-KflWEsay8guLOoxuVt7
   baseUrl: https://tequila-api.kiwi.com/v2
-open-cage:
-  api-key: 153c5117a83e4062988a2745c713dc52
 dbBahn:
   baseUrl: https://v6.db.transport.rest/

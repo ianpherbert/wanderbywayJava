@@ -2,9 +2,7 @@ name: Build Docker Image
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ dev ]
 
 jobs:
   build:
@@ -23,11 +21,3 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
-
-      - name: Build Docker image
-        run: docker build . -t my-application:latest
-
-      - name: Run Docker image
-        run: docker run -d -p 8080:8080 my-application:latest
-
-    # Optional: Add steps to test the running application
