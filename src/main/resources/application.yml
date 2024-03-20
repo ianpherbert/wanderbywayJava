@@ -3,7 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:5432/postgres?user=postgres.bsrmtjhnrzxpvwoxqvop&password=dV38LWUgPCXSPSc5
+    #url: jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:5432/postgres?user=postgres.bsrmtjhnrzxpvwoxqvop&password=dV38LWUgPCXSPSc5
+    #url: jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:5432/postgres?user=postgres.keavxuuqtjnzjegngjld&password=JDhbBf55TEMs!YC8
+    url: ${SPRING_DATASOURCE_URL}
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
@@ -12,7 +14,8 @@ spring:
     hibernate:
       ddl-auto: update
 tequila:
-  apiKey: BhUIsil5ss0_-KflWEsay8guLOoxuVt7
+  apiKey: ${SPRING_TEQUILA_API_KEY}
   baseUrl: https://tequila-api.kiwi.com/v2
 dbBahn:
   baseUrl: https://v6.db.transport.rest/
+test: ${SPRING_TEST_STRING}
