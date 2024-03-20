@@ -10,9 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthRestController {
 
     private final String environment;
+    private final String version;
 
-    HealthRestController(@Value("${environment}")String environment){
+    HealthRestController(
+            @Value("${environment}")String environment,
+            @Value("${version}")String version
+    ){
         this.environment = environment;
+        this.version = version;
     }
 
     @GetMapping("/ping")
@@ -22,6 +27,6 @@ public class HealthRestController {
 
     @GetMapping("/version")
     VersionInfo getVersionInfo(){
-        return new VersionInfo("0.0.1", "NOW", environment);
+        return new VersionInfo(version, environment);
     }
 }
