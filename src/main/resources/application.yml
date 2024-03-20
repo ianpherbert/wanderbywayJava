@@ -18,4 +18,4 @@ tequila:
   baseUrl: https://tequila-api.kiwi.com/v2
 dbBahn:
   baseUrl: https://v6.db.transport.rest/
-test: ${SPRING_TEST_STRING}
+environment: ${SPRING_ENV}
