@@ -17,4 +17,4 @@ tequila:
 dbBahn:
   baseUrl: https://v6.db.transport.rest/
 environment: ${SPRING_ENV}
-version: 0.0.1
+version: 0.0.2
