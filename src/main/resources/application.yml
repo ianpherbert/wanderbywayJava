@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
+    url: jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:5432/postgres?user=postgres.bsrmtjhnrzxpvwoxqvop&password=dV38LWUgPCXSPSc5
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
@@ -12,9 +12,11 @@ spring:
     hibernate:
       ddl-auto: update
 tequila:
-  apiKey: ${SPRING_TEQUILA_API_KEY}
+  apiKey: BhUIsil5ss0_-KflWEsay8guLOoxuVt7
   baseUrl: https://tequila-api.kiwi.com/v2
 dbBahn:
   baseUrl: https://v6.db.transport.rest/
-environment: ${SPRING_ENV}
+busApi:
+  baseUrl: https://bus.api.wanderbyway.com
+environment: local
 version: 0.0.2

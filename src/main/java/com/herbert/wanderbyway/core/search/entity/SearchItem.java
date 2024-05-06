@@ -3,14 +3,14 @@ package com.herbert.wanderbyway.core.search.entity;
 import java.util.List;
 
 public class SearchItem {
-    int id;
+    String id;
     String name;
     String slug;
     SearchItemType type;
     String country;
     List<SearchItem> children;
 
-    public SearchItem(int id, String name, String slug, SearchItemType type, List<SearchItem> children, String country) {
+    public SearchItem(String id, String name, String slug, SearchItemType type, List<SearchItem> children, String country) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -39,7 +39,7 @@ public class SearchItem {
         return children;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 }

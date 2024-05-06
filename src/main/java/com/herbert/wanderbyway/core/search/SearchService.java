@@ -19,6 +19,7 @@ public class SearchService implements FindAllByNameUseCase, FindByIdAndTypeUseCa
     FindSearchStationById findSearchStationById;
     FindSearchAirportById findSearchAirportById;
     FindSearchCityById findSearchCityById;
+    FindBusStationsByName findBusStationsByName;
 
     public SearchService(
             FindCitiesByName findCitiesByName,
@@ -26,7 +27,8 @@ public class SearchService implements FindAllByNameUseCase, FindByIdAndTypeUseCa
             FindTrainStationsByName findTrainStationsByName,
             FindSearchStationById findSearchStationById,
             FindSearchAirportById findSearchAirportById,
-            FindSearchCityById findSearchCityById
+            FindSearchCityById findSearchCityById,
+            FindBusStationsByName findBusStationsByName
     ) {
         this.findCitiesByName = findCitiesByName;
         this.findAirportsByName = findAirportsByName;
@@ -34,6 +36,7 @@ public class SearchService implements FindAllByNameUseCase, FindByIdAndTypeUseCa
         this.findSearchStationById = findSearchStationById;
         this.findSearchAirportById = findSearchAirportById;
         this.findSearchCityById = findSearchCityById;
+        this.findBusStationsByName = findBusStationsByName;
     }
 
     @Override
@@ -48,6 +51,9 @@ public class SearchService implements FindAllByNameUseCase, FindByIdAndTypeUseCa
         }
         if(options.getAirport()){
             results.addAll(findAirportsByName.findByName(query));
+        }
+        if(options.getBus()){
+            results.addAll(findBusStationsByName.findBusStationsByName(query));
         }
 
        return results;

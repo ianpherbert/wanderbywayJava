@@ -1,5 +1,6 @@
 package com.herbert.wanderbyway.utils.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -13,6 +14,7 @@ public class RestUtils {
     private final RestTemplate restTemplate;
     private final String baseUrl;
     private final HttpHeaders headers = new HttpHeaders();
+    private final ObjectMapper objectMapper = new ObjectMapper();
     public RestUtils(RestTemplate restTemplate, String baseUrl, List<Header> headers) {
         this.restTemplate = restTemplate;
         this.baseUrl = baseUrl;
@@ -40,10 +42,14 @@ public class RestUtils {
     }
 
     private <T, B>T callApi(URI uri, HttpMethod method, B body, Class<T> responseType) {
-        HttpEntity<B> request = new HttpEntity<B>(body, this.headers);
-        ResponseEntity<T> response = this.restTemplate.exchange(uri, method, request, responseType);
+        HttpEntity<B> request = new HttpEntity<>(body, this.headers);
+        ResponseEntity<String> response = this.restTemplate.exchange(uri, method, request, String.class);
         if(response.getStatusCode().is2xxSuccessful()){
-            return response.getBody();
+            try {
+                return objectMapper.readValue(response.getBody(), responseType);
+            } catch (Exception e) {
+                e.printStackTrace(); // Handle exception appropriately
+            }
         }
         return null;
     }

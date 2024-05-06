@@ -55,7 +55,6 @@ public class FlightSearchParams implements SearchParams {
     }
 
     public MultiValueMap<String, String> toMap(){
-
         MultiValueMap<String, String> items = new LinkedMultiValueMap<>();
         if(origin != null) items.add("fly_from", origin);
         if(destination != null) items.add("fly_to", destination);

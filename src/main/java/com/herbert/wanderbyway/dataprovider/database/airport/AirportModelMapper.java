@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public abstract class AirportModelMapper {
     SearchItem toSearchResult(AirportModel airport){
-        return new SearchItem(airport.getId(), airport.getName(), airport.getSlug(), SearchItemType.AIRPORT, null, airport.getCountry());
+        return new SearchItem(airport.getId().toString(), airport.getName(), airport.getSlug(), SearchItemType.AIRPORT, null, airport.getCountry());
     }
 
     List<SearchItem> toSearchResults(List<AirportModel> airports){
