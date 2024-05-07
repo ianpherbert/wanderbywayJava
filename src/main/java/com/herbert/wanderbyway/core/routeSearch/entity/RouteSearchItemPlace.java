@@ -1,5 +1,7 @@
 package com.herbert.wanderbyway.core.routeSearch.entity;
 
+import com.herbert.wanderbyway.dataprovider.bus.entity.BusRouteStop;
+
 public class RouteSearchItemPlace {
     String name;
     String id;
@@ -57,6 +59,14 @@ public class RouteSearchItemPlace {
         this.longitude = city.getLongitude();
         this.latitude = city.getLongitude();
         this.country = city.getCountry();
+    }
+
+    public RouteSearchItemPlace(BusRouteStop busStop){
+        this.name = busStop.getName();
+        this.id = busStop.getStopId();
+        this.type = RouteSearchItemPlaceType.CITY;
+        this.longitude = busStop.getLongitude();
+        this.latitude = busStop.getLongitude();
     }
 
     public static RouteSearchItemPlace buildSearchAirport(String iata){

@@ -19,7 +19,7 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteD
     FindStationsFromDbId findStationsFromDbId;
     FindRouteSearchCityById findRouteSearchCityById;
     GetTrainRouteDetails getTrainRouteDetails;
-
+    FindBusRoutesFromLocationId findBusRoutesFromLocationId;
     public RouteSearchService(
             FindFlightsFromAirport findFlightsFromAirport,
             FindAirportsFromIata findAirportsFromIata,
@@ -28,7 +28,8 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteD
             FindStationsFromDbId findStationsFromDbId,
             FindRouteSearchStationById findRouteSearchStationById,
             FindRouteSearchCityById findRouteSearchCityById,
-            GetTrainRouteDetails getTrainRouteDetails
+            GetTrainRouteDetails getTrainRouteDetails,
+            FindBusRoutesFromLocationId findBusRoutesFromLocationId
     ) {
         this.findFlightsFromAirport = findFlightsFromAirport;
         this.findAirportsFromIata = findAirportsFromIata;
@@ -38,6 +39,7 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteD
         this.findRouteSearchStationById = findRouteSearchStationById;
         this.findRouteSearchCityById = findRouteSearchCityById;
         this.getTrainRouteDetails = getTrainRouteDetails;
+        this.findBusRoutesFromLocationId = findBusRoutesFromLocationId;
     }
 
     @Override
@@ -65,10 +67,20 @@ public class RouteSearchService implements FindRoutesFromPlaceUseCase, GetRouteD
                 origin.getStations().forEach(it -> routes.addAll(this.getTrainRoutes(it, startDate, endDate)));
                 return new RouteSearchResult(routes, new RouteSearchItemPlace(origin));
             }
+            case BUS_STATION -> {
+                return getBusRoutes(id, startDate);
+            }
             default -> {
                 throw new NotFoundException("Could not find station for id: " + id);
             }
         }
+    }
+
+    private RouteSearchResult getBusRoutes(int id, Date startDate){
+        List<RouteSearchItem> routes = findBusRoutesFromLocationId.findRoutes(id, startDate);
+        if(routes.isEmpty()) return null;
+        RouteSearchItemPlace origin = routes.stream().findFirst().get().getOrigin();
+        return new RouteSearchResult(routes, origin);
     }
 
     private List<RouteSearchItem> getTrainRoutes(RouteSearchTrainStation origin, Date startDate, Date endDate){

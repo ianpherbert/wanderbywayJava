@@ -1,5 +1,7 @@
 package com.herbert.wanderbyway.dataprovider.bus;
 
+import com.herbert.wanderbyway.core.routeSearch.connectors.FindBusRoutesFromLocationId;
+import com.herbert.wanderbyway.core.routeSearch.entity.RouteSearchItem;
 import com.herbert.wanderbyway.core.search.connectors.FindBusStationsByName;
 import com.herbert.wanderbyway.core.search.entity.SearchItem;
 import com.herbert.wanderbyway.dataprovider.bus.apiParams.LocationSearchParams;
@@ -27,7 +29,7 @@ class StopResults extends BusResult<BusStop>{}
 class BusRouteResults extends BusResult<BusRoute>{}
 
 @Service
-public class BusController implements FindBusStationsByName {
+public class BusController implements FindBusStationsByName, FindBusRoutesFromLocationId {
     private final RestUtils restUtils;
     private final BusMapper busMapper;
     public BusController(RestTemplate restTemplate, @Value("${busApi.baseUrl}")String baseUrl, BusMapper busMapper){
@@ -71,6 +73,24 @@ public class BusController implements FindBusStationsByName {
         }catch (URISyntaxException error){
             throw new NotFoundException("URI exception: ".concat(error.getMessage()));
         }
+    }
+
+    @Override
+    public List<RouteSearchItem> findRoutes(int locationId) {
+        return null;
+    }
+
+    @Override
+    public List<RouteSearchItem> findRoutes(int locationId, Date date) {
+        RouteSearchParams params = new RouteSearchParams();
+        params.setDate(DateUtils.formatDateToString(date, DateFormat.BUS_API));
+        try{
+            List<BusRoute> results = restUtils.call(Endpoints.ROUTE.getValue(String.valueOf(locationId)), HttpMethod.GET, params, BusRouteResults.class).getData();
+            return busMapper.toRouteSearchItems(results);
+        }catch (URISyntaxException error){
+            throw new NotFoundException("URI exception: ".concat(error.getMessage()));
+        }
+
     }
 }
 

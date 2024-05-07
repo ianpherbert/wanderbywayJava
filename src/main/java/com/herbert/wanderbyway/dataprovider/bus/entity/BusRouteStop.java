@@ -66,4 +66,6 @@ public class BusRouteStop {
     public void setSequence(int sequence) {
         this.sequence = sequence;
     }
+
+
 }

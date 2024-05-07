@@ -2,11 +2,9 @@ package com.herbert.wanderbyway.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,6 +67,22 @@ public class DateUtils  {
         } catch (ParseException e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    public static long calculateDifference(String startDateTime, String endDateTime) {
+        try {
+            Instant start = Instant.parse(startDateTime);
+            Instant end = Instant.parse(endDateTime);
+
+            Duration duration = Duration.between(start, end);
+
+            // Return the total number of minutes in the duration
+            return duration.toMinutes();
+        } catch (DateTimeParseException e) {
+            // Handle invalid date-time format by returning -1 as an indicator
+            System.out.println("Invalid date-time format");
+            return -1;
         }
     }
 }
